@@ -22,15 +22,12 @@ async function ensureAboutInstitutePublicPermissions(strapi: Core.Strapi) {
     requiredActions.map(async (action) => {
       const permissionAction = `api::about-institute.about-institute.${action}`;
 
-      const existingPermission = await strapi
-        .db
-        .query("plugin::users-permissions.permission")
-        .findOne({
-          where: {
-            action: permissionAction,
-            role: publicRole.id,
-          },
-        });
+      const existingPermission = await strapi.db.query("plugin::users-permissions.permission").findOne({
+        where: {
+          action: permissionAction,
+          role: publicRole.id,
+        },
+      });
 
       if (!existingPermission) {
         await strapi.db.query("plugin::users-permissions.permission").create({
@@ -46,7 +43,7 @@ async function ensureAboutInstitutePublicPermissions(strapi: Core.Strapi) {
           data: { enabled: true },
         });
       }
-    }),
+    })
   );
 }
 
