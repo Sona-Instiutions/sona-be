@@ -24,7 +24,22 @@
       "targetField": "name",
       "required": true,
       "unique": true
+    },
+    "bannerImage": {
+      "type": "media",
+      "multiple": false,
+      "required": true,
+      "allowedTypes": ["images"]
+    },
+    "bannerTitle": {
+      "type": "string",
+      "required": true,
+      "maxLength": 255
+    },
+    "bannerSubtitle": {
+      "type": "text",
+      "required": false,
+      "maxLength": 500
     }
   }
 }
-

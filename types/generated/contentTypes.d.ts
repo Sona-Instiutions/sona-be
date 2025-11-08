@@ -443,6 +443,16 @@ export interface ApiInstitutionInstitution extends Struct.CollectionTypeSchema {
     timestamps: true;
   };
   attributes: {
+    bannerImage: Schema.Attribute.Media<'images'> & Schema.Attribute.Required;
+    bannerSubtitle: Schema.Attribute.Text &
+      Schema.Attribute.SetMinMaxLength<{
+        maxLength: 500;
+      }>;
+    bannerTitle: Schema.Attribute.String &
+      Schema.Attribute.Required &
+      Schema.Attribute.SetMinMaxLength<{
+        maxLength: 255;
+      }>;
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
