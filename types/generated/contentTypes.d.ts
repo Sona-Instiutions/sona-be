@@ -430,6 +430,60 @@ export interface AdminUser extends Struct.CollectionTypeSchema {
   };
 }
 
+export interface ApiAboutInstituteAboutInstitute
+  extends Struct.CollectionTypeSchema {
+  collectionName: 'about_institutes';
+  info: {
+    displayName: 'About Institute';
+    pluralName: 'about-institutes';
+    singularName: 'about-institute';
+  };
+  options: {
+    draftAndPublish: false;
+    increments: true;
+    timestamps: true;
+  };
+  attributes: {
+    badgeColor: Schema.Attribute.String &
+      Schema.Attribute.SetMinMaxLength<{
+        maxLength: 50;
+      }>;
+    badgeText: Schema.Attribute.String &
+      Schema.Attribute.SetMinMaxLength<{
+        maxLength: 100;
+      }>;
+    badgeValue: Schema.Attribute.String &
+      Schema.Attribute.SetMinMaxLength<{
+        maxLength: 50;
+      }>;
+    bullets: Schema.Attribute.RichText;
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    description: Schema.Attribute.RichText;
+    image: Schema.Attribute.Media<'images'>;
+    institution: Schema.Attribute.Relation<
+      'manyToOne',
+      'api::institution.institution'
+    > &
+      Schema.Attribute.Required;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::about-institute.about-institute'
+    > &
+      Schema.Attribute.Private;
+    publishedAt: Schema.Attribute.DateTime;
+    title: Schema.Attribute.String &
+      Schema.Attribute.SetMinMaxLength<{
+        maxLength: 255;
+      }>;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+  };
+}
+
 export interface ApiInstitutionInstitution extends Struct.CollectionTypeSchema {
   collectionName: 'institutions';
   info: {
@@ -443,6 +497,10 @@ export interface ApiInstitutionInstitution extends Struct.CollectionTypeSchema {
     timestamps: true;
   };
   attributes: {
+    aboutInstitute: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::about-institute.about-institute'
+    >;
     bannerImage: Schema.Attribute.Media<'images'> & Schema.Attribute.Required;
     bannerSubtitle: Schema.Attribute.Text &
       Schema.Attribute.SetMinMaxLength<{
@@ -988,6 +1046,7 @@ declare module '@strapi/strapi' {
       'admin::transfer-token': AdminTransferToken;
       'admin::transfer-token-permission': AdminTransferTokenPermission;
       'admin::user': AdminUser;
+      'api::about-institute.about-institute': ApiAboutInstituteAboutInstitute;
       'api::institution.institution': ApiInstitutionInstitution;
       'plugin::content-releases.release': PluginContentReleasesRelease;
       'plugin::content-releases.release-action': PluginContentReleasesReleaseAction;

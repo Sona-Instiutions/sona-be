@@ -1,0 +1,59 @@
+{
+  "kind": "collectionType",
+  "collectionName": "about_institutes",
+  "info": {
+    "singularName": "about-institute",
+    "pluralName": "about-institutes",
+    "displayName": "About Institute"
+  },
+  "options": {
+    "increments": true,
+    "timestamps": true,
+    "draftAndPublish": false
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "institution": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::institution.institution",
+      "inversedBy": "aboutInstitute",
+      "required": true
+    },
+    "title": {
+      "type": "string",
+      "required": false,
+      "maxLength": 255
+    },
+    "description": {
+      "type": "richtext",
+      "required": false
+    },
+    "bullets": {
+      "type": "richtext",
+      "required": false
+    },
+    "image": {
+      "type": "media",
+      "multiple": false,
+      "required": false,
+      "allowedTypes": ["images"]
+    },
+    "badgeText": {
+      "type": "string",
+      "required": false,
+      "maxLength": 100
+    },
+    "badgeValue": {
+      "type": "string",
+      "required": false,
+      "maxLength": 50
+    },
+    "badgeColor": {
+      "type": "string",
+      "required": false,
+      "maxLength": 50
+    }
+  }
+}
+

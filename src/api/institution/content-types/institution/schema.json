@@ -40,6 +40,12 @@
       "type": "text",
       "required": false,
       "maxLength": 500
+    },
+    "aboutInstitute": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::about-institute.about-institute",
+      "mappedBy": "institution"
     }
   }
 }
