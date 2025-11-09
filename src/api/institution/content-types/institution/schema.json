@@ -46,6 +46,12 @@
       "relation": "oneToMany",
       "target": "api::about-institute.about-institute",
       "mappedBy": "institution"
+    },
+    "program": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::program.program",
+      "mappedBy": "institution"
     }
   }
 }
