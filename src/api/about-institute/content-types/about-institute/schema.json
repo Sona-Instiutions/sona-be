@@ -30,7 +30,9 @@
       "required": false
     },
     "bullets": {
-      "type": "richtext",
+      "type": "component",
+      "repeatable": true,
+      "component": "content.bullet-item",
       "required": false
     },
     "image": {

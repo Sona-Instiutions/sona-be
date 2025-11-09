@@ -26,9 +26,10 @@
       "maxLength": 255
     },
     "icon": {
-      "type": "string",
-      "required": false,
-      "maxLength": 50
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::icon-badge.icon-badge",
+      "required": false
     },
     "description": {
       "type": "richtext",

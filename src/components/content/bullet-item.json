@@ -1,0 +1,22 @@
+{
+  "collectionName": "components_content_bullet_items",
+  "info": {
+    "displayName": "Bullet Item",
+    "description": "Bullet point with markdown content and icon reference",
+    "icon": "bulletList"
+  },
+  "options": {},
+  "attributes": {
+    "text": {
+      "type": "richtext",
+      "required": true
+    },
+    "icon": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::icon-badge.icon-badge",
+      "required": true
+    }
+  }
+}
+

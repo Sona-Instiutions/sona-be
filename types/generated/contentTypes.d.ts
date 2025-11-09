@@ -456,7 +456,7 @@ export interface ApiAboutInstituteAboutInstitute
       Schema.Attribute.SetMinMaxLength<{
         maxLength: 50;
       }>;
-    bullets: Schema.Attribute.RichText;
+    bullets: Schema.Attribute.Component<'content.bullet-item', true>;
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
@@ -478,6 +478,52 @@ export interface ApiAboutInstituteAboutInstitute
       Schema.Attribute.SetMinMaxLength<{
         maxLength: 255;
       }>;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+  };
+}
+
+export interface ApiIconBadgeIconBadge extends Struct.CollectionTypeSchema {
+  collectionName: 'icon_badges';
+  info: {
+    displayName: 'Icon Badge';
+    pluralName: 'icon-badges';
+    singularName: 'icon-badge';
+  };
+  options: {
+    draftAndPublish: false;
+    increments: true;
+    timestamps: true;
+  };
+  attributes: {
+    backgroundColor: Schema.Attribute.String &
+      Schema.Attribute.SetMinMaxLength<{
+        maxLength: 50;
+      }>;
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    displayName: Schema.Attribute.String &
+      Schema.Attribute.SetMinMaxLength<{
+        maxLength: 100;
+      }>;
+    iconColor: Schema.Attribute.String &
+      Schema.Attribute.SetMinMaxLength<{
+        maxLength: 50;
+      }>;
+    iconName: Schema.Attribute.String &
+      Schema.Attribute.Required &
+      Schema.Attribute.SetMinMaxLength<{
+        maxLength: 100;
+      }>;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::icon-badge.icon-badge'
+    > &
+      Schema.Attribute.Private;
+    publishedAt: Schema.Attribute.DateTime;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
@@ -555,10 +601,7 @@ export interface ApiProgramSectionProgramSection
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
     description: Schema.Attribute.RichText;
-    icon: Schema.Attribute.String &
-      Schema.Attribute.SetMinMaxLength<{
-        maxLength: 50;
-      }>;
+    icon: Schema.Attribute.Relation<'oneToOne', 'api::icon-badge.icon-badge'>;
     learnMoreIsExternal: Schema.Attribute.Boolean &
       Schema.Attribute.DefaultTo<false>;
     learnMoreText: Schema.Attribute.String &
@@ -1146,6 +1189,7 @@ declare module '@strapi/strapi' {
       'admin::transfer-token-permission': AdminTransferTokenPermission;
       'admin::user': AdminUser;
       'api::about-institute.about-institute': ApiAboutInstituteAboutInstitute;
+      'api::icon-badge.icon-badge': ApiIconBadgeIconBadge;
       'api::institution.institution': ApiInstitutionInstitution;
       'api::program-section.program-section': ApiProgramSectionProgramSection;
       'api::program.program': ApiProgramProgram;
