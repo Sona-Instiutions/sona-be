@@ -47,6 +47,147 @@ async function ensureAboutInstitutePublicPermissions(strapi: Core.Strapi) {
   );
 }
 
+/**
+ * Ensures the public role has read permissions for the value-proposition collection.
+ *
+ * @param strapi - Strapi instance used to interact with the permission tables.
+ */
+async function ensureValuePropositionPublicPermissions(strapi: Core.Strapi) {
+  const publicRole = await strapi.db.query("plugin::users-permissions.role").findOne({
+    where: { type: "public" },
+    populate: { permissions: true },
+  });
+
+  if (!publicRole) {
+    strapi.log.warn("Public role not found. Skipping value-proposition permission setup.");
+    return;
+  }
+
+  const requiredActions = ["find", "findOne"];
+
+  await Promise.all(
+    requiredActions.map(async (action) => {
+      const permissionAction = `api::value-proposition.value-proposition.${action}`;
+
+      const existingPermission = await strapi.db.query("plugin::users-permissions.permission").findOne({
+        where: {
+          action: permissionAction,
+          role: publicRole.id,
+        },
+      });
+
+      if (!existingPermission) {
+        await strapi.db.query("plugin::users-permissions.permission").create({
+          data: {
+            action: permissionAction,
+            role: publicRole.id,
+            enabled: true,
+          },
+        });
+      } else if (!existingPermission.enabled) {
+        await strapi.db.query("plugin::users-permissions.permission").update({
+          where: { id: existingPermission.id },
+          data: { enabled: true },
+        });
+      }
+    })
+  );
+}
+
+/**
+ * Ensures the public role has read permissions for the achievement collection.
+ *
+ * @param strapi - Strapi instance used to interact with the permission tables.
+ */
+async function ensureAchievementPublicPermissions(strapi: Core.Strapi) {
+  const publicRole = await strapi.db.query("plugin::users-permissions.role").findOne({
+    where: { type: "public" },
+    populate: { permissions: true },
+  });
+
+  if (!publicRole) {
+    strapi.log.warn("Public role not found. Skipping achievement permission setup.");
+    return;
+  }
+
+  const requiredActions = ["find", "findOne"];
+
+  await Promise.all(
+    requiredActions.map(async (action) => {
+      const permissionAction = `api::achievement.achievement.${action}`;
+
+      const existingPermission = await strapi.db.query("plugin::users-permissions.permission").findOne({
+        where: {
+          action: permissionAction,
+          role: publicRole.id,
+        },
+      });
+
+      if (!existingPermission) {
+        await strapi.db.query("plugin::users-permissions.permission").create({
+          data: {
+            action: permissionAction,
+            role: publicRole.id,
+            enabled: true,
+          },
+        });
+      } else if (!existingPermission.enabled) {
+        await strapi.db.query("plugin::users-permissions.permission").update({
+          where: { id: existingPermission.id },
+          data: { enabled: true },
+        });
+      }
+    })
+  );
+}
+
+/**
+ * Ensures the public role has read permissions for the recognition-section collection.
+ *
+ * @param strapi - Strapi instance used to interact with the permission tables.
+ */
+async function ensureRecognitionSectionPublicPermissions(strapi: Core.Strapi) {
+  const publicRole = await strapi.db.query("plugin::users-permissions.role").findOne({
+    where: { type: "public" },
+    populate: { permissions: true },
+  });
+
+  if (!publicRole) {
+    strapi.log.warn("Public role not found. Skipping recognition-section permission setup.");
+    return;
+  }
+
+  const requiredActions = ["find", "findOne"];
+
+  await Promise.all(
+    requiredActions.map(async (action) => {
+      const permissionAction = `api::recognition-section.recognition-section.${action}`;
+
+      const existingPermission = await strapi.db.query("plugin::users-permissions.permission").findOne({
+        where: {
+          action: permissionAction,
+          role: publicRole.id,
+        },
+      });
+
+      if (!existingPermission) {
+        await strapi.db.query("plugin::users-permissions.permission").create({
+          data: {
+            action: permissionAction,
+            role: publicRole.id,
+            enabled: true,
+          },
+        });
+      } else if (!existingPermission.enabled) {
+        await strapi.db.query("plugin::users-permissions.permission").update({
+          where: { id: existingPermission.id },
+          data: { enabled: true },
+        });
+      }
+    })
+  );
+}
+
 export default {
   /**
    * An asynchronous register function that runs before
@@ -60,5 +201,8 @@ export default {
    */
   async bootstrap({ strapi }: { strapi: Core.Strapi }) {
     await ensureAboutInstitutePublicPermissions(strapi);
+    await ensureValuePropositionPublicPermissions(strapi);
+    await ensureAchievementPublicPermissions(strapi);
+    await ensureRecognitionSectionPublicPermissions(strapi);
   },
 };

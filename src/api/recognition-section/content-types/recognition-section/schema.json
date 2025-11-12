@@ -1,0 +1,40 @@
+{
+  "kind": "collectionType",
+  "collectionName": "recognition_sections",
+  "info": {
+    "singularName": "recognition-section",
+    "pluralName": "recognition-sections",
+    "displayName": "Recognition Section"
+  },
+  "options": {
+    "increments": true,
+    "timestamps": true,
+    "draftAndPublish": false
+  },
+  "attributes": {
+    "institution": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::institution.institution",
+      "inversedBy": "recognitions",
+      "required": true
+    },
+    "title": {
+      "type": "string",
+      "required": true,
+      "maxLength": 150
+    },
+    "backgroundColor": {
+      "type": "string",
+      "required": false,
+      "maxLength": 50,
+      "default": "#1e3a5f"
+    },
+    "recognitions": {
+      "type": "component",
+      "repeatable": true,
+      "component": "content.recognition-item",
+      "required": false
+    }
+  }
+}

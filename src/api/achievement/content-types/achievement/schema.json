@@ -1,0 +1,55 @@
+{
+  "kind": "collectionType",
+  "collectionName": "achievements",
+  "info": {
+    "singularName": "achievement",
+    "pluralName": "achievements",
+    "displayName": "Achievement Section"
+  },
+  "options": {
+    "increments": true,
+    "timestamps": true,
+    "draftAndPublish": false
+  },
+  "attributes": {
+    "institution": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::institution.institution",
+      "inversedBy": "achievements",
+      "required": true
+    },
+    "titlePrefix": {
+      "type": "string",
+      "required": false,
+      "maxLength": 100
+    },
+    "titlePrefixColor": {
+      "type": "string",
+      "required": false,
+      "maxLength": 50,
+      "default": "white"
+    },
+    "titleHighlight": {
+      "type": "string",
+      "required": false,
+      "maxLength": 100
+    },
+    "titleHighlightColor": {
+      "type": "string",
+      "required": false,
+      "maxLength": 50,
+      "default": "#fbbf24"
+    },
+    "description": {
+      "type": "richtext",
+      "required": false
+    },
+    "achievements": {
+      "type": "component",
+      "repeatable": true,
+      "component": "content.achievement-item",
+      "required": false
+    }
+  }
+}

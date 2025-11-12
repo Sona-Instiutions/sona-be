@@ -1,0 +1,32 @@
+{
+  "collectionName": "components_content_recognition_items",
+  "info": {
+    "displayName": "Recognition Item",
+    "description": "Recognition card highlighting awards and certifications",
+    "icon": "award"
+  },
+  "options": {},
+  "attributes": {
+    "icon": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::icon-badge.icon-badge",
+      "required": true
+    },
+    "title": {
+      "type": "string",
+      "required": true,
+      "maxLength": 120
+    },
+    "description": {
+      "type": "string",
+      "required": false,
+      "maxLength": 255
+    },
+    "order": {
+      "type": "integer",
+      "required": false,
+      "default": 0
+    }
+  }
+}

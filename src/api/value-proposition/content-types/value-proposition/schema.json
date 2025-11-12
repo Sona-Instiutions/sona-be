@@ -1,0 +1,63 @@
+{
+  "kind": "collectionType",
+  "collectionName": "value_propositions",
+  "info": {
+    "singularName": "value-proposition",
+    "pluralName": "value-propositions",
+    "displayName": "Value Proposition"
+  },
+  "options": {
+    "increments": true,
+    "timestamps": true,
+    "draftAndPublish": false
+  },
+  "attributes": {
+    "institution": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::institution.institution",
+      "inversedBy": "valuePropositions",
+      "required": true
+    },
+    "titlePrefix": {
+      "type": "string",
+      "required": false,
+      "maxLength": 100
+    },
+    "titlePrefixColor": {
+      "type": "string",
+      "required": false,
+      "maxLength": 50,
+      "default": "white"
+    },
+    "titleHighlight": {
+      "type": "string",
+      "required": false,
+      "maxLength": 100
+    },
+    "titleHighlightColor": {
+      "type": "string",
+      "required": false,
+      "maxLength": 50,
+      "default": "#fbbf24"
+    },
+    "subtitle": {
+      "type": "text",
+      "required": false,
+      "maxLength": 500
+    },
+    "backgroundImage": {
+      "type": "media",
+      "multiple": false,
+      "required": false,
+      "allowedTypes": ["images"]
+    },
+    "propositions": {
+      "type": "component",
+      "repeatable": true,
+      "component": "content.value-proposition-item",
+      "required": false
+    }
+  }
+}
+

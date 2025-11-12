@@ -484,6 +484,60 @@ export interface ApiAboutInstituteAboutInstitute
   };
 }
 
+export interface ApiAchievementAchievement extends Struct.CollectionTypeSchema {
+  collectionName: 'achievements';
+  info: {
+    displayName: 'Achievement Section';
+    pluralName: 'achievements';
+    singularName: 'achievement';
+  };
+  options: {
+    draftAndPublish: false;
+    increments: true;
+    timestamps: true;
+  };
+  attributes: {
+    achievements: Schema.Attribute.Component<'content.achievement-item', true>;
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    description: Schema.Attribute.RichText;
+    institution: Schema.Attribute.Relation<
+      'oneToOne',
+      'api::institution.institution'
+    > &
+      Schema.Attribute.Required;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::achievement.achievement'
+    > &
+      Schema.Attribute.Private;
+    publishedAt: Schema.Attribute.DateTime;
+    titleHighlight: Schema.Attribute.String &
+      Schema.Attribute.SetMinMaxLength<{
+        maxLength: 100;
+      }>;
+    titleHighlightColor: Schema.Attribute.String &
+      Schema.Attribute.SetMinMaxLength<{
+        maxLength: 50;
+      }> &
+      Schema.Attribute.DefaultTo<'#fbbf24'>;
+    titlePrefix: Schema.Attribute.String &
+      Schema.Attribute.SetMinMaxLength<{
+        maxLength: 100;
+      }>;
+    titlePrefixColor: Schema.Attribute.String &
+      Schema.Attribute.SetMinMaxLength<{
+        maxLength: 50;
+      }> &
+      Schema.Attribute.DefaultTo<'white'>;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+  };
+}
+
 export interface ApiIconBadgeIconBadge extends Struct.CollectionTypeSchema {
   collectionName: 'icon_badges';
   info: {
@@ -547,6 +601,10 @@ export interface ApiInstitutionInstitution extends Struct.CollectionTypeSchema {
       'oneToMany',
       'api::about-institute.about-institute'
     >;
+    achievements: Schema.Attribute.Relation<
+      'oneToOne',
+      'api::achievement.achievement'
+    >;
     bannerImage: Schema.Attribute.Media<'images'> & Schema.Attribute.Required;
     bannerSubtitle: Schema.Attribute.Text &
       Schema.Attribute.SetMinMaxLength<{
@@ -574,12 +632,20 @@ export interface ApiInstitutionInstitution extends Struct.CollectionTypeSchema {
       }>;
     program: Schema.Attribute.Relation<'oneToOne', 'api::program.program'>;
     publishedAt: Schema.Attribute.DateTime;
+    recognitions: Schema.Attribute.Relation<
+      'oneToOne',
+      'api::recognition-section.recognition-section'
+    >;
     slug: Schema.Attribute.UID<'name'> &
       Schema.Attribute.Required &
       Schema.Attribute.Unique;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
+    valuePropositions: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::value-proposition.value-proposition'
+    >;
   };
 }
 
@@ -672,6 +738,114 @@ export interface ApiProgramProgram extends Struct.CollectionTypeSchema {
       Schema.Attribute.SetMinMaxLength<{
         maxLength: 255;
       }>;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+  };
+}
+
+export interface ApiRecognitionSectionRecognitionSection
+  extends Struct.CollectionTypeSchema {
+  collectionName: 'recognition_sections';
+  info: {
+    displayName: 'Recognition Section';
+    pluralName: 'recognition-sections';
+    singularName: 'recognition-section';
+  };
+  options: {
+    draftAndPublish: false;
+    increments: true;
+    timestamps: true;
+  };
+  attributes: {
+    backgroundColor: Schema.Attribute.String &
+      Schema.Attribute.SetMinMaxLength<{
+        maxLength: 50;
+      }> &
+      Schema.Attribute.DefaultTo<'#1e3a5f'>;
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    institution: Schema.Attribute.Relation<
+      'oneToOne',
+      'api::institution.institution'
+    > &
+      Schema.Attribute.Required;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::recognition-section.recognition-section'
+    > &
+      Schema.Attribute.Private;
+    publishedAt: Schema.Attribute.DateTime;
+    recognitions: Schema.Attribute.Component<'content.recognition-item', true>;
+    title: Schema.Attribute.String &
+      Schema.Attribute.Required &
+      Schema.Attribute.SetMinMaxLength<{
+        maxLength: 150;
+      }>;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+  };
+}
+
+export interface ApiValuePropositionValueProposition
+  extends Struct.CollectionTypeSchema {
+  collectionName: 'value_propositions';
+  info: {
+    displayName: 'Value Proposition';
+    pluralName: 'value-propositions';
+    singularName: 'value-proposition';
+  };
+  options: {
+    draftAndPublish: false;
+    increments: true;
+    timestamps: true;
+  };
+  attributes: {
+    backgroundImage: Schema.Attribute.Media<'images'>;
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    institution: Schema.Attribute.Relation<
+      'manyToOne',
+      'api::institution.institution'
+    > &
+      Schema.Attribute.Required;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::value-proposition.value-proposition'
+    > &
+      Schema.Attribute.Private;
+    propositions: Schema.Attribute.Component<
+      'content.value-proposition-item',
+      true
+    >;
+    publishedAt: Schema.Attribute.DateTime;
+    subtitle: Schema.Attribute.Text &
+      Schema.Attribute.SetMinMaxLength<{
+        maxLength: 500;
+      }>;
+    titleHighlight: Schema.Attribute.String &
+      Schema.Attribute.SetMinMaxLength<{
+        maxLength: 100;
+      }>;
+    titleHighlightColor: Schema.Attribute.String &
+      Schema.Attribute.SetMinMaxLength<{
+        maxLength: 50;
+      }> &
+      Schema.Attribute.DefaultTo<'#fbbf24'>;
+    titlePrefix: Schema.Attribute.String &
+      Schema.Attribute.SetMinMaxLength<{
+        maxLength: 100;
+      }>;
+    titlePrefixColor: Schema.Attribute.String &
+      Schema.Attribute.SetMinMaxLength<{
+        maxLength: 50;
+      }> &
+      Schema.Attribute.DefaultTo<'white'>;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
@@ -1189,10 +1363,13 @@ declare module '@strapi/strapi' {
       'admin::transfer-token-permission': AdminTransferTokenPermission;
       'admin::user': AdminUser;
       'api::about-institute.about-institute': ApiAboutInstituteAboutInstitute;
+      'api::achievement.achievement': ApiAchievementAchievement;
       'api::icon-badge.icon-badge': ApiIconBadgeIconBadge;
       'api::institution.institution': ApiInstitutionInstitution;
       'api::program-section.program-section': ApiProgramSectionProgramSection;
       'api::program.program': ApiProgramProgram;
+      'api::recognition-section.recognition-section': ApiRecognitionSectionRecognitionSection;
+      'api::value-proposition.value-proposition': ApiValuePropositionValueProposition;
       'plugin::content-releases.release': PluginContentReleasesRelease;
       'plugin::content-releases.release-action': PluginContentReleasesReleaseAction;
       'plugin::i18n.locale': PluginI18NLocale;

@@ -52,6 +52,24 @@
       "relation": "oneToOne",
       "target": "api::program.program",
       "mappedBy": "institution"
+    },
+    "achievements": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::achievement.achievement",
+      "mappedBy": "institution"
+    },
+    "recognitions": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::recognition-section.recognition-section",
+      "mappedBy": "institution"
+    },
+    "valuePropositions": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::value-proposition.value-proposition",
+      "mappedBy": "institution"
     }
   }
 }

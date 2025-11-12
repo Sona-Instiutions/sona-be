@@ -1,0 +1,29 @@
+{
+  "collectionName": "components_content_achievement_items",
+  "info": {
+    "displayName": "Achievement Item",
+    "icon": "star"
+  },
+  "options": {},
+  "attributes": {
+    "statistic": {
+      "type": "string",
+      "required": true,
+      "maxLength": 25
+    },
+    "title": {
+      "type": "string",
+      "required": true,
+      "maxLength": 120
+    },
+    "description": {
+      "type": "string",
+      "required": false,
+      "maxLength": 255
+    },
+    "order": {
+      "type": "integer",
+      "required": false
+    }
+  }
+}

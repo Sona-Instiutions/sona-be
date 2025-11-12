@@ -1,0 +1,38 @@
+{
+  "collectionName": "components_content_value_proposition_items",
+  "info": {
+    "displayName": "Value Proposition Item",
+    "description": "Value proposition card with icon, description, and optional order",
+    "icon": "star"
+  },
+  "options": {},
+  "attributes": {
+    "title": {
+      "type": "string",
+      "required": true,
+      "maxLength": 100
+    },
+    "titleColor": {
+      "type": "string",
+      "required": false,
+      "maxLength": 50,
+      "default": "#fbbf24"
+    },
+    "description": {
+      "type": "richtext",
+      "required": true
+    },
+    "icon": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::icon-badge.icon-badge",
+      "required": true
+    },
+    "order": {
+      "type": "integer",
+      "required": false,
+      "default": 0
+    }
+  }
+}
+
