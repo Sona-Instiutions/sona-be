@@ -17,13 +17,29 @@
       "type": "relation",
       "relation": "manyToOne",
       "target": "api::institution.institution",
-      "inversedBy": "aboutInstitute",
-      "required": true
+      "inversedBy": "aboutInstitute"
     },
-    "title": {
+    "titlePrefix": {
       "type": "string",
       "required": false,
-      "maxLength": 255
+      "maxLength": 100
+    },
+    "titlePrefixColor": {
+      "type": "string",
+      "required": false,
+      "maxLength": 50,
+      "default": "white"
+    },
+    "titleHighlight": {
+      "type": "string",
+      "required": false,
+      "maxLength": 100
+    },
+    "titleHighlightColor": {
+      "type": "string",
+      "required": false,
+      "maxLength": 50,
+      "default": "#fbbf24"
     },
     "description": {
       "type": "richtext",
@@ -39,7 +55,9 @@
       "type": "media",
       "multiple": false,
       "required": false,
-      "allowedTypes": ["images"]
+      "allowedTypes": [
+        "images"
+      ]
     },
     "badgeText": {
       "type": "string",

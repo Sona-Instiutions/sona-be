@@ -16,8 +16,7 @@
       "type": "relation",
       "relation": "oneToOne",
       "target": "api::institution.institution",
-      "inversedBy": "recognitions",
-      "required": true
+      "inversedBy": "recognitions"
     },
     "title": {
       "type": "string",

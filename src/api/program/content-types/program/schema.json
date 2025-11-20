@@ -17,8 +17,7 @@
       "type": "relation",
       "relation": "oneToOne",
       "target": "api::institution.institution",
-      "inversedBy": "program",
-      "required": true
+      "inversedBy": "program"
     },
     "title": {
       "type": "string",
@@ -36,4 +35,3 @@
     }
   }
 }
-

@@ -465,8 +465,7 @@ export interface ApiAboutInstituteAboutInstitute
     institution: Schema.Attribute.Relation<
       'manyToOne',
       'api::institution.institution'
-    > &
-      Schema.Attribute.Required;
+    >;
     locale: Schema.Attribute.String & Schema.Attribute.Private;
     localizations: Schema.Attribute.Relation<
       'oneToMany',
@@ -474,10 +473,24 @@ export interface ApiAboutInstituteAboutInstitute
     > &
       Schema.Attribute.Private;
     publishedAt: Schema.Attribute.DateTime;
-    title: Schema.Attribute.String &
+    titleHighlight: Schema.Attribute.String &
       Schema.Attribute.SetMinMaxLength<{
-        maxLength: 255;
+        maxLength: 100;
       }>;
+    titleHighlightColor: Schema.Attribute.String &
+      Schema.Attribute.SetMinMaxLength<{
+        maxLength: 50;
+      }> &
+      Schema.Attribute.DefaultTo<'#fbbf24'>;
+    titlePrefix: Schema.Attribute.String &
+      Schema.Attribute.SetMinMaxLength<{
+        maxLength: 100;
+      }>;
+    titlePrefixColor: Schema.Attribute.String &
+      Schema.Attribute.SetMinMaxLength<{
+        maxLength: 50;
+      }> &
+      Schema.Attribute.DefaultTo<'white'>;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
@@ -505,8 +518,7 @@ export interface ApiAchievementAchievement extends Struct.CollectionTypeSchema {
     institution: Schema.Attribute.Relation<
       'oneToOne',
       'api::institution.institution'
-    > &
-      Schema.Attribute.Required;
+    >;
     locale: Schema.Attribute.String & Schema.Attribute.Private;
     localizations: Schema.Attribute.Relation<
       'oneToMany',
@@ -593,8 +605,6 @@ export interface ApiInstitutionInstitution extends Struct.CollectionTypeSchema {
   };
   options: {
     draftAndPublish: false;
-    increments: true;
-    timestamps: true;
   };
   attributes: {
     aboutInstitute: Schema.Attribute.Relation<
@@ -610,11 +620,24 @@ export interface ApiInstitutionInstitution extends Struct.CollectionTypeSchema {
       Schema.Attribute.SetMinMaxLength<{
         maxLength: 500;
       }>;
-    bannerTitle: Schema.Attribute.String &
-      Schema.Attribute.Required &
+    bannerTitleHighlight: Schema.Attribute.String &
       Schema.Attribute.SetMinMaxLength<{
-        maxLength: 255;
+        maxLength: 100;
       }>;
+    bannerTitleHighlightColor: Schema.Attribute.String &
+      Schema.Attribute.SetMinMaxLength<{
+        maxLength: 50;
+      }> &
+      Schema.Attribute.DefaultTo<'#fbbf24'>;
+    bannerTitlePrefix: Schema.Attribute.String &
+      Schema.Attribute.SetMinMaxLength<{
+        maxLength: 100;
+      }>;
+    bannerTitlePrefixColor: Schema.Attribute.String &
+      Schema.Attribute.SetMinMaxLength<{
+        maxLength: 50;
+      }> &
+      Schema.Attribute.DefaultTo<'white'>;
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
@@ -636,9 +659,7 @@ export interface ApiInstitutionInstitution extends Struct.CollectionTypeSchema {
       'oneToOne',
       'api::recognition-section.recognition-section'
     >;
-    slug: Schema.Attribute.UID<'name'> &
-      Schema.Attribute.Required &
-      Schema.Attribute.Unique;
+    slug: Schema.Attribute.UID<'name'> & Schema.Attribute.Required;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
@@ -669,8 +690,7 @@ export interface ApiProgramProgram extends Struct.CollectionTypeSchema {
     institution: Schema.Attribute.Relation<
       'oneToOne',
       'api::institution.institution'
-    > &
-      Schema.Attribute.Required;
+    >;
     locale: Schema.Attribute.String & Schema.Attribute.Private;
     localizations: Schema.Attribute.Relation<
       'oneToMany',
@@ -715,8 +735,7 @@ export interface ApiRecognitionSectionRecognitionSection
     institution: Schema.Attribute.Relation<
       'oneToOne',
       'api::institution.institution'
-    > &
-      Schema.Attribute.Required;
+    >;
     locale: Schema.Attribute.String & Schema.Attribute.Private;
     localizations: Schema.Attribute.Relation<
       'oneToMany',
@@ -757,8 +776,7 @@ export interface ApiValuePropositionValueProposition
     institution: Schema.Attribute.Relation<
       'manyToOne',
       'api::institution.institution'
-    > &
-      Schema.Attribute.Required;
+    >;
     locale: Schema.Attribute.String & Schema.Attribute.Private;
     localizations: Schema.Attribute.Relation<
       'oneToMany',
