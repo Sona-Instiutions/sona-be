@@ -1,0 +1,41 @@
+{
+  "collectionName": "components_sections_program_sections",
+  "info": {
+    "displayName": "Program Section",
+    "icon": "layer-group",
+    "description": "Section within a program"
+  },
+  "options": {},
+  "attributes": {
+    "title": {
+      "type": "string",
+      "required": true,
+      "maxLength": 255
+    },
+    "icon": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::icon-badge.icon-badge"
+    },
+    "description": {
+      "type": "richtext"
+    },
+    "learnMoreText": {
+      "type": "string",
+      "default": "Learn More",
+      "maxLength": 100
+    },
+    "learnMoreUrl": {
+      "type": "string",
+      "maxLength": 500
+    },
+    "learnMoreIsExternal": {
+      "type": "boolean",
+      "default": false
+    },
+    "order": {
+      "type": "integer",
+      "default": 0
+    }
+  }
+}

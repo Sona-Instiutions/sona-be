@@ -87,6 +87,36 @@ export interface ContentValuePropositionItem extends Struct.ComponentSchema {
   };
 }
 
+export interface SectionsProgramSection extends Struct.ComponentSchema {
+  collectionName: 'components_sections_program_sections';
+  info: {
+    description: 'Section within a program';
+    displayName: 'Program Section';
+    icon: 'layer-group';
+  };
+  attributes: {
+    description: Schema.Attribute.RichText;
+    icon: Schema.Attribute.Relation<'oneToOne', 'api::icon-badge.icon-badge'>;
+    learnMoreIsExternal: Schema.Attribute.Boolean &
+      Schema.Attribute.DefaultTo<false>;
+    learnMoreText: Schema.Attribute.String &
+      Schema.Attribute.SetMinMaxLength<{
+        maxLength: 100;
+      }> &
+      Schema.Attribute.DefaultTo<'Learn More'>;
+    learnMoreUrl: Schema.Attribute.String &
+      Schema.Attribute.SetMinMaxLength<{
+        maxLength: 500;
+      }>;
+    order: Schema.Attribute.Integer & Schema.Attribute.DefaultTo<0>;
+    title: Schema.Attribute.String &
+      Schema.Attribute.Required &
+      Schema.Attribute.SetMinMaxLength<{
+        maxLength: 255;
+      }>;
+  };
+}
+
 declare module '@strapi/strapi' {
   export module Public {
     export interface ComponentSchemas {
@@ -94,6 +124,7 @@ declare module '@strapi/strapi' {
       'content.bullet-item': ContentBulletItem;
       'content.recognition-item': ContentRecognitionItem;
       'content.value-proposition-item': ContentValuePropositionItem;
+      'sections.program-section': SectionsProgramSection;
     }
   }
 }
