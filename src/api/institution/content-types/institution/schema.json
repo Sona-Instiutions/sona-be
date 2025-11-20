@@ -75,12 +75,6 @@
       "target": "api::achievement.achievement",
       "mappedBy": "institution"
     },
-    "recognitions": {
-      "type": "relation",
-      "relation": "oneToOne",
-      "target": "api::recognition-section.recognition-section",
-      "mappedBy": "institution"
-    },
     "valuePropositions": {
       "type": "relation",
       "relation": "oneToMany",

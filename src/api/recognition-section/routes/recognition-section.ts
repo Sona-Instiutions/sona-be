@@ -1,3 +1,0 @@
-import { factories } from "@strapi/strapi";
-
-export default factories.createCoreRouter("api::recognition-section.recognition-section");

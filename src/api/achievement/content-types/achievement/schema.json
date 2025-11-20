@@ -40,6 +40,23 @@
       "maxLength": 50,
       "default": "#fbbf24"
     },
+    "recognitionTitle": {
+      "type": "string",
+      "required": false,
+      "maxLength": 150
+    },
+    "recognitionBackgroundColor": {
+      "type": "string",
+      "required": false,
+      "maxLength": 50,
+      "default": "#1e3a5f"
+    },
+    "recognitions": {
+      "type": "component",
+      "repeatable": true,
+      "component": "content.recognition-item",
+      "required": false
+    },
     "description": {
       "type": "richtext",
       "required": false
