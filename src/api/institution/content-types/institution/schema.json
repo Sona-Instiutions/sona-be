@@ -80,6 +80,12 @@
       "relation": "oneToMany",
       "target": "api::value-proposition.value-proposition",
       "mappedBy": "institution"
+    },
+    "keyHighlightSection": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::key-highlight-section.key-highlight-section",
+      "mappedBy": "institution"
     }
   }
 }

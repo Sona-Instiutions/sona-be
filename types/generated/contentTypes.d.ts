@@ -651,6 +651,10 @@ export interface ApiInstitutionInstitution extends Struct.CollectionTypeSchema {
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
+    keyHighlightSection: Schema.Attribute.Relation<
+      'oneToOne',
+      'api::key-highlight-section.key-highlight-section'
+    >;
     locale: Schema.Attribute.String & Schema.Attribute.Private;
     localizations: Schema.Attribute.Relation<
       'oneToMany',
@@ -673,6 +677,64 @@ export interface ApiInstitutionInstitution extends Struct.CollectionTypeSchema {
       'oneToMany',
       'api::value-proposition.value-proposition'
     >;
+  };
+}
+
+export interface ApiKeyHighlightSectionKeyHighlightSection
+  extends Struct.CollectionTypeSchema {
+  collectionName: 'key_highlight_sections';
+  info: {
+    description: 'Section highlighting key reasons to choose the institution';
+    displayName: 'Key Highlight Section';
+    pluralName: 'key-highlight-sections';
+    singularName: 'key-highlight-section';
+  };
+  options: {
+    draftAndPublish: false;
+  };
+  attributes: {
+    backgroundImage: Schema.Attribute.Media<'images'>;
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    description: Schema.Attribute.Text;
+    highlights: Schema.Attribute.Component<
+      'content.value-proposition-item',
+      true
+    >;
+    image: Schema.Attribute.Media<'images'>;
+    institution: Schema.Attribute.Relation<
+      'oneToOne',
+      'api::institution.institution'
+    >;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::key-highlight-section.key-highlight-section'
+    > &
+      Schema.Attribute.Private;
+    publishedAt: Schema.Attribute.DateTime;
+    titleHighlight: Schema.Attribute.String &
+      Schema.Attribute.SetMinMaxLength<{
+        maxLength: 100;
+      }>;
+    titleHighlightColor: Schema.Attribute.String &
+      Schema.Attribute.SetMinMaxLength<{
+        maxLength: 50;
+      }> &
+      Schema.Attribute.DefaultTo<'text-amber-400'>;
+    titlePrefix: Schema.Attribute.String &
+      Schema.Attribute.SetMinMaxLength<{
+        maxLength: 100;
+      }>;
+    titlePrefixColor: Schema.Attribute.String &
+      Schema.Attribute.SetMinMaxLength<{
+        maxLength: 50;
+      }> &
+      Schema.Attribute.DefaultTo<'text-white'>;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
   };
 }
 
@@ -1291,6 +1353,7 @@ declare module '@strapi/strapi' {
       'api::achievement.achievement': ApiAchievementAchievement;
       'api::icon-badge.icon-badge': ApiIconBadgeIconBadge;
       'api::institution.institution': ApiInstitutionInstitution;
+      'api::key-highlight-section.key-highlight-section': ApiKeyHighlightSectionKeyHighlightSection;
       'api::program.program': ApiProgramProgram;
       'api::value-proposition.value-proposition': ApiValuePropositionValueProposition;
       'plugin::content-releases.release': PluginContentReleasesRelease;

@@ -1,0 +1,64 @@
+{
+  "kind": "collectionType",
+  "collectionName": "key_highlight_sections",
+  "info": {
+    "singularName": "key-highlight-section",
+    "pluralName": "key-highlight-sections",
+    "displayName": "Key Highlight Section",
+    "description": "Section highlighting key reasons to choose the institution"
+  },
+  "options": {
+    "draftAndPublish": false
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "institution": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::institution.institution",
+      "inversedBy": "keyHighlightSection"
+    },
+    "titlePrefix": {
+      "type": "string",
+      "maxLength": 100
+    },
+    "titlePrefixColor": {
+      "type": "string",
+      "maxLength": 50,
+      "default": "text-white"
+    },
+    "titleHighlight": {
+      "type": "string",
+      "maxLength": 100
+    },
+    "titleHighlightColor": {
+      "type": "string",
+      "maxLength": 50,
+      "default": "text-amber-400"
+    },
+    "description": {
+      "type": "text"
+    },
+    "image": {
+      "type": "media",
+      "multiple": false,
+      "required": false,
+      "allowedTypes": [
+        "images"
+      ]
+    },
+    "backgroundImage": {
+      "type": "media",
+      "multiple": false,
+      "required": false,
+      "allowedTypes": [
+        "images"
+      ]
+    },
+    "highlights": {
+      "type": "component",
+      "repeatable": true,
+      "component": "content.value-proposition-item"
+    }
+  }
+}
