@@ -62,6 +62,32 @@ export interface ContentRecognitionItem extends Struct.ComponentSchema {
   };
 }
 
+export interface ContentTestimonialItem extends Struct.ComponentSchema {
+  collectionName: 'components_content_testimonial_items';
+  info: {
+    description: '';
+    displayName: 'Testimonial Item';
+    icon: 'quote';
+  };
+  attributes: {
+    avatar: Schema.Attribute.Media<'images'>;
+    company: Schema.Attribute.String;
+    name: Schema.Attribute.String & Schema.Attribute.Required;
+    quote: Schema.Attribute.Text & Schema.Attribute.Required;
+    rating: Schema.Attribute.Integer &
+      Schema.Attribute.Required &
+      Schema.Attribute.SetMinMax<
+        {
+          max: 5;
+          min: 1;
+        },
+        number
+      > &
+      Schema.Attribute.DefaultTo<5>;
+    role: Schema.Attribute.String & Schema.Attribute.Required;
+  };
+}
+
 export interface ContentValuePropositionItem extends Struct.ComponentSchema {
   collectionName: 'components_content_value_proposition_items';
   info: {
@@ -123,6 +149,7 @@ declare module '@strapi/strapi' {
       'content.achievement-item': ContentAchievementItem;
       'content.bullet-item': ContentBulletItem;
       'content.recognition-item': ContentRecognitionItem;
+      'content.testimonial-item': ContentTestimonialItem;
       'content.value-proposition-item': ContentValuePropositionItem;
       'sections.program-section': SectionsProgramSection;
     }

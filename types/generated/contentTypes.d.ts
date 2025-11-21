@@ -670,6 +670,10 @@ export interface ApiInstitutionInstitution extends Struct.CollectionTypeSchema {
     program: Schema.Attribute.Relation<'oneToOne', 'api::program.program'>;
     publishedAt: Schema.Attribute.DateTime;
     slug: Schema.Attribute.UID<'name'> & Schema.Attribute.Required;
+    testimonialSection: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::testimonial-section.testimonial-section'
+    >;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
@@ -772,6 +776,45 @@ export interface ApiProgramProgram extends Struct.CollectionTypeSchema {
       Schema.Attribute.SetMinMaxLength<{
         maxLength: 255;
       }>;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+  };
+}
+
+export interface ApiTestimonialSectionTestimonialSection
+  extends Struct.CollectionTypeSchema {
+  collectionName: 'testimonial_sections';
+  info: {
+    description: 'Section containing testimonials for an institution';
+    displayName: 'Testimonial Section';
+    pluralName: 'testimonial-sections';
+    singularName: 'testimonial-section';
+  };
+  options: {
+    draftAndPublish: false;
+  };
+  attributes: {
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    institution: Schema.Attribute.Relation<
+      'manyToOne',
+      'api::institution.institution'
+    >;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::testimonial-section.testimonial-section'
+    > &
+      Schema.Attribute.Private;
+    publishedAt: Schema.Attribute.DateTime;
+    subtitle: Schema.Attribute.Text;
+    testimonials: Schema.Attribute.Component<'content.testimonial-item', true>;
+    titleHighlight: Schema.Attribute.String;
+    titleHighlightColor: Schema.Attribute.String;
+    titlePrefix: Schema.Attribute.String;
+    titlePrefixColor: Schema.Attribute.String;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
@@ -1355,6 +1398,7 @@ declare module '@strapi/strapi' {
       'api::institution.institution': ApiInstitutionInstitution;
       'api::key-highlight-section.key-highlight-section': ApiKeyHighlightSectionKeyHighlightSection;
       'api::program.program': ApiProgramProgram;
+      'api::testimonial-section.testimonial-section': ApiTestimonialSectionTestimonialSection;
       'api::value-proposition.value-proposition': ApiValuePropositionValueProposition;
       'plugin::content-releases.release': PluginContentReleasesRelease;
       'plugin::content-releases.release-action': PluginContentReleasesReleaseAction;

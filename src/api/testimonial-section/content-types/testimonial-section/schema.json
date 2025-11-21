@@ -1,0 +1,42 @@
+{
+  "kind": "collectionType",
+  "collectionName": "testimonial_sections",
+  "info": {
+    "singularName": "testimonial-section",
+    "pluralName": "testimonial-sections",
+    "displayName": "Testimonial Section",
+    "description": "Section containing testimonials for an institution"
+  },
+  "options": {
+    "draftAndPublish": false
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "titlePrefix": {
+      "type": "string"
+    },
+    "titlePrefixColor": {
+      "type": "string"
+    },
+    "titleHighlight": {
+      "type": "string"
+    },
+    "titleHighlightColor": {
+      "type": "string"
+    },
+    "subtitle": {
+      "type": "text"
+    },
+    "institution": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::institution.institution",
+      "inversedBy": "testimonialSection"
+    },
+    "testimonials": {
+      "type": "component",
+      "repeatable": true,
+      "component": "content.testimonial-item"
+    }
+  }
+}
