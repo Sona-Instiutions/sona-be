@@ -37,7 +37,7 @@
       "default": "text-amber-400"
     },
     "description": {
-      "type": "text"
+      "type": "richtext"
     },
     "image": {
       "type": "media",

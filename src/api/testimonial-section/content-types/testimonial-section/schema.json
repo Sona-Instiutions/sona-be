@@ -24,8 +24,8 @@
     "titleHighlightColor": {
       "type": "string"
     },
-    "subtitle": {
-      "type": "text"
+    "description": {
+      "type": "richtext"
     },
     "institution": {
       "type": "relation",

@@ -701,7 +701,7 @@ export interface ApiKeyHighlightSectionKeyHighlightSection
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
-    description: Schema.Attribute.Text;
+    description: Schema.Attribute.RichText;
     highlights: Schema.Attribute.Component<
       'content.value-proposition-item',
       true
@@ -798,6 +798,7 @@ export interface ApiTestimonialSectionTestimonialSection
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
+    description: Schema.Attribute.RichText;
     institution: Schema.Attribute.Relation<
       'manyToOne',
       'api::institution.institution'
@@ -809,7 +810,6 @@ export interface ApiTestimonialSectionTestimonialSection
     > &
       Schema.Attribute.Private;
     publishedAt: Schema.Attribute.DateTime;
-    subtitle: Schema.Attribute.Text;
     testimonials: Schema.Attribute.Component<'content.testimonial-item', true>;
     titleHighlight: Schema.Attribute.String;
     titleHighlightColor: Schema.Attribute.String;
