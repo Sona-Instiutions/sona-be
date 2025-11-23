@@ -1,0 +1,25 @@
+{
+  "collectionName": "components_content_faq_items",
+  "info": {
+    "displayName": "FAQ Item",
+    "description": "Question and answer pair for FAQ sections",
+    "icon": "question"
+  },
+  "options": {},
+  "attributes": {
+    "question": {
+      "type": "string",
+      "required": true,
+      "maxLength": 200
+    },
+    "answer": {
+      "type": "richtext",
+      "required": true
+    },
+    "order": {
+      "type": "integer",
+      "default": 0
+    }
+  }
+}
+

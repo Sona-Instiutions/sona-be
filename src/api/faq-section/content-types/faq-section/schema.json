@@ -1,0 +1,59 @@
+{
+  "kind": "collectionType",
+  "collectionName": "faq_sections",
+  "info": {
+    "singularName": "faq-section",
+    "pluralName": "faq-sections",
+    "displayName": "FAQ Section",
+    "description": "Frequently asked questions for an institution"
+  },
+  "options": {
+    "draftAndPublish": false
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "titlePrefix": {
+      "type": "string",
+      "maxLength": 100
+    },
+    "titlePrefixColor": {
+      "type": "string",
+      "maxLength": 50,
+      "default": "text-slate-900"
+    },
+    "titleHighlight": {
+      "type": "string",
+      "maxLength": 100,
+      "required": true
+    },
+    "titleHighlightColor": {
+      "type": "string",
+      "maxLength": 50,
+      "default": "text-amber-500"
+    },
+    "description": {
+      "type": "richtext"
+    },
+    "backgroundImage": {
+      "type": "media",
+      "multiple": false,
+      "allowedTypes": [
+        "images"
+      ]
+    },
+    "faqs": {
+      "type": "component",
+      "repeatable": true,
+      "component": "content.faq-item",
+      "min": 2,
+      "required": true
+    },
+    "institution": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::institution.institution",
+      "inversedBy": "faqSection"
+    }
+  }
+}
+

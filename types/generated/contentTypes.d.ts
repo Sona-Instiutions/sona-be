@@ -622,6 +622,67 @@ export interface ApiCampusGallerySectionCampusGallerySection
   };
 }
 
+export interface ApiFaqSectionFaqSection extends Struct.CollectionTypeSchema {
+  collectionName: 'faq_sections';
+  info: {
+    description: 'Frequently asked questions for an institution';
+    displayName: 'FAQ Section';
+    pluralName: 'faq-sections';
+    singularName: 'faq-section';
+  };
+  options: {
+    draftAndPublish: false;
+  };
+  attributes: {
+    backgroundImage: Schema.Attribute.Media<'images'>;
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    description: Schema.Attribute.RichText;
+    faqs: Schema.Attribute.Component<'content.faq-item', true> &
+      Schema.Attribute.Required &
+      Schema.Attribute.SetMinMax<
+        {
+          min: 2;
+        },
+        number
+      >;
+    institution: Schema.Attribute.Relation<
+      'oneToOne',
+      'api::institution.institution'
+    >;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::faq-section.faq-section'
+    > &
+      Schema.Attribute.Private;
+    publishedAt: Schema.Attribute.DateTime;
+    titleHighlight: Schema.Attribute.String &
+      Schema.Attribute.Required &
+      Schema.Attribute.SetMinMaxLength<{
+        maxLength: 100;
+      }>;
+    titleHighlightColor: Schema.Attribute.String &
+      Schema.Attribute.SetMinMaxLength<{
+        maxLength: 50;
+      }> &
+      Schema.Attribute.DefaultTo<'text-amber-500'>;
+    titlePrefix: Schema.Attribute.String &
+      Schema.Attribute.SetMinMaxLength<{
+        maxLength: 100;
+      }>;
+    titlePrefixColor: Schema.Attribute.String &
+      Schema.Attribute.SetMinMaxLength<{
+        maxLength: 50;
+      }> &
+      Schema.Attribute.DefaultTo<'text-slate-900'>;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+  };
+}
+
 export interface ApiIconBadgeIconBadge extends Struct.CollectionTypeSchema {
   collectionName: 'icon_badges';
   info: {
@@ -717,6 +778,10 @@ export interface ApiInstitutionInstitution extends Struct.CollectionTypeSchema {
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
+    faqSection: Schema.Attribute.Relation<
+      'oneToOne',
+      'api::faq-section.faq-section'
+    >;
     keyHighlightSection: Schema.Attribute.Relation<
       'oneToOne',
       'api::key-highlight-section.key-highlight-section'
@@ -1506,6 +1571,7 @@ declare module '@strapi/strapi' {
       'api::about-institute.about-institute': ApiAboutInstituteAboutInstitute;
       'api::achievement.achievement': ApiAchievementAchievement;
       'api::campus-gallery-section.campus-gallery-section': ApiCampusGallerySectionCampusGallerySection;
+      'api::faq-section.faq-section': ApiFaqSectionFaqSection;
       'api::icon-badge.icon-badge': ApiIconBadgeIconBadge;
       'api::institution.institution': ApiInstitutionInstitution;
       'api::key-highlight-section.key-highlight-section': ApiKeyHighlightSectionKeyHighlightSection;

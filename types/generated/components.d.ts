@@ -78,6 +78,24 @@ export interface ContentCampusGalleryImage extends Struct.ComponentSchema {
   };
 }
 
+export interface ContentFaqItem extends Struct.ComponentSchema {
+  collectionName: 'components_content_faq_items';
+  info: {
+    description: 'Question and answer pair for FAQ sections';
+    displayName: 'FAQ Item';
+    icon: 'question';
+  };
+  attributes: {
+    answer: Schema.Attribute.RichText & Schema.Attribute.Required;
+    order: Schema.Attribute.Integer & Schema.Attribute.DefaultTo<0>;
+    question: Schema.Attribute.String &
+      Schema.Attribute.Required &
+      Schema.Attribute.SetMinMaxLength<{
+        maxLength: 200;
+      }>;
+  };
+}
+
 export interface ContentPartnershipItem extends Struct.ComponentSchema {
   collectionName: 'components_content_partnership_items';
   info: {
@@ -203,6 +221,7 @@ declare module '@strapi/strapi' {
       'content.bullet-item': ContentBulletItem;
       'content.campus-gallery-column': ContentCampusGalleryColumn;
       'content.campus-gallery-image': ContentCampusGalleryImage;
+      'content.faq-item': ContentFaqItem;
       'content.partnership-item': ContentPartnershipItem;
       'content.recognition-item': ContentRecognitionItem;
       'content.testimonial-item': ContentTestimonialItem;

@@ -104,6 +104,12 @@
       "relation": "oneToOne",
       "target": "api::campus-gallery-section.campus-gallery-section",
       "mappedBy": "institution"
+    },
+    "faqSection": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::faq-section.faq-section",
+      "mappedBy": "institution"
     }
   }
 }
