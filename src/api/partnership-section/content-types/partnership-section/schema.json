@@ -1,0 +1,55 @@
+{
+  "kind": "collectionType",
+  "collectionName": "partnership_sections",
+  "info": {
+    "singularName": "partnership-section",
+    "pluralName": "partnership-sections",
+    "displayName": "Partnership Section",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": false
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "titlePrefix": {
+      "type": "string",
+      "required": true
+    },
+    "titlePrefixColor": {
+      "type": "string",
+      "required": false
+    },
+    "titleHighlight": {
+      "type": "string",
+      "required": true
+    },
+    "titleHighlightColor": {
+      "type": "string",
+      "required": false
+    },
+    "description": {
+      "type": "richtext",
+      "required": true
+    },
+    "backgroundImage": {
+      "type": "media",
+      "multiple": false,
+      "required": true,
+      "allowedTypes": [
+        "images"
+      ]
+    },
+    "partnerships": {
+      "type": "component",
+      "repeatable": true,
+      "component": "content.partnership-item"
+    },
+    "institution": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::institution.institution",
+      "inversedBy": "partnershipSection"
+    }
+  }
+}

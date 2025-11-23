@@ -92,6 +92,12 @@
       "relation": "oneToMany",
       "target": "api::testimonial-section.testimonial-section",
       "mappedBy": "institution"
+    },
+    "partnershipSection": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::partnership-section.partnership-section",
+      "mappedBy": "institution"
     }
   }
 }

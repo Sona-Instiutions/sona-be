@@ -39,6 +39,20 @@ export interface ContentBulletItem extends Struct.ComponentSchema {
   };
 }
 
+export interface ContentPartnershipItem extends Struct.ComponentSchema {
+  collectionName: 'components_content_partnership_items';
+  info: {
+    description: '';
+    displayName: 'Partnership Item';
+    icon: 'handshake';
+  };
+  attributes: {
+    backgroundColor: Schema.Attribute.String;
+    companyLogo: Schema.Attribute.Media<'images'> & Schema.Attribute.Required;
+    companyName: Schema.Attribute.String & Schema.Attribute.Required;
+  };
+}
+
 export interface ContentRecognitionItem extends Struct.ComponentSchema {
   collectionName: 'components_content_recognition_items';
   info: {
@@ -148,6 +162,7 @@ declare module '@strapi/strapi' {
     export interface ComponentSchemas {
       'content.achievement-item': ContentAchievementItem;
       'content.bullet-item': ContentBulletItem;
+      'content.partnership-item': ContentPartnershipItem;
       'content.recognition-item': ContentRecognitionItem;
       'content.testimonial-item': ContentTestimonialItem;
       'content.value-proposition-item': ContentValuePropositionItem;

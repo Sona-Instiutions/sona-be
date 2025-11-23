@@ -667,6 +667,10 @@ export interface ApiInstitutionInstitution extends Struct.CollectionTypeSchema {
       Schema.Attribute.SetMinMaxLength<{
         maxLength: 255;
       }>;
+    partnershipSection: Schema.Attribute.Relation<
+      'oneToOne',
+      'api::partnership-section.partnership-section'
+    >;
     program: Schema.Attribute.Relation<'oneToOne', 'api::program.program'>;
     publishedAt: Schema.Attribute.DateTime;
     slug: Schema.Attribute.UID<'name'> & Schema.Attribute.Required;
@@ -736,6 +740,47 @@ export interface ApiKeyHighlightSectionKeyHighlightSection
         maxLength: 50;
       }> &
       Schema.Attribute.DefaultTo<'text-white'>;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+  };
+}
+
+export interface ApiPartnershipSectionPartnershipSection
+  extends Struct.CollectionTypeSchema {
+  collectionName: 'partnership_sections';
+  info: {
+    description: '';
+    displayName: 'Partnership Section';
+    pluralName: 'partnership-sections';
+    singularName: 'partnership-section';
+  };
+  options: {
+    draftAndPublish: false;
+  };
+  attributes: {
+    backgroundImage: Schema.Attribute.Media<'images'> &
+      Schema.Attribute.Required;
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    description: Schema.Attribute.RichText & Schema.Attribute.Required;
+    institution: Schema.Attribute.Relation<
+      'oneToOne',
+      'api::institution.institution'
+    >;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::partnership-section.partnership-section'
+    > &
+      Schema.Attribute.Private;
+    partnerships: Schema.Attribute.Component<'content.partnership-item', true>;
+    publishedAt: Schema.Attribute.DateTime;
+    titleHighlight: Schema.Attribute.String & Schema.Attribute.Required;
+    titleHighlightColor: Schema.Attribute.String;
+    titlePrefix: Schema.Attribute.String & Schema.Attribute.Required;
+    titlePrefixColor: Schema.Attribute.String;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
@@ -1397,6 +1442,7 @@ declare module '@strapi/strapi' {
       'api::icon-badge.icon-badge': ApiIconBadgeIconBadge;
       'api::institution.institution': ApiInstitutionInstitution;
       'api::key-highlight-section.key-highlight-section': ApiKeyHighlightSectionKeyHighlightSection;
+      'api::partnership-section.partnership-section': ApiPartnershipSectionPartnershipSection;
       'api::program.program': ApiProgramProgram;
       'api::testimonial-section.testimonial-section': ApiTestimonialSectionTestimonialSection;
       'api::value-proposition.value-proposition': ApiValuePropositionValueProposition;
