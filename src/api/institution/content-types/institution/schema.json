@@ -98,6 +98,12 @@
       "relation": "oneToOne",
       "target": "api::partnership-section.partnership-section",
       "mappedBy": "institution"
+    },
+    "campusGallerySection": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::campus-gallery-section.campus-gallery-section",
+      "mappedBy": "institution"
     }
   }
 }

@@ -1,0 +1,24 @@
+{
+  "collectionName": "components_content_campus_gallery_columns",
+  "info": {
+    "displayName": "Campus Gallery Column",
+    "description": "Column containing exactly two gallery images",
+    "icon": "columns"
+  },
+  "options": {},
+  "attributes": {
+    "order": {
+      "type": "integer",
+      "default": 0
+    },
+    "images": {
+      "type": "component",
+      "repeatable": true,
+      "component": "content.campus-gallery-image",
+      "min": 2,
+      "max": 2,
+      "required": true
+    }
+  }
+}
+

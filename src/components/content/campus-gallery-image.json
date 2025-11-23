@@ -1,0 +1,33 @@
+{
+  "collectionName": "components_content_campus_gallery_images",
+  "info": {
+    "displayName": "Campus Gallery Image",
+    "description": "Image tile used in the campus gallery collage",
+    "icon": "images"
+  },
+  "options": {},
+  "attributes": {
+    "image": {
+      "type": "media",
+      "multiple": false,
+      "allowedTypes": [
+        "images"
+      ],
+      "required": true
+    },
+    "altText": {
+      "type": "string",
+      "maxLength": 120
+    },
+    "layoutVariant": {
+      "type": "enumeration",
+      "enum": [
+        "square",
+        "tall",
+        "wide"
+      ],
+      "default": "square"
+    }
+  }
+}
+

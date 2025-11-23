@@ -1,0 +1,59 @@
+{
+  "kind": "collectionType",
+  "collectionName": "campus_gallery_sections",
+  "info": {
+    "singularName": "campus-gallery-section",
+    "pluralName": "campus-gallery-sections",
+    "displayName": "Campus Gallery Section",
+    "description": "Institution-specific collage of campus life images"
+  },
+  "options": {
+    "draftAndPublish": false
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "institution": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::institution.institution",
+      "inversedBy": "campusGallerySection"
+    },
+    "titlePrefix": {
+      "type": "string",
+      "maxLength": 100
+    },
+    "titlePrefixColor": {
+      "type": "string",
+      "maxLength": 50,
+      "default": "text-white"
+    },
+    "titleHighlight": {
+      "type": "string",
+      "maxLength": 100
+    },
+    "titleHighlightColor": {
+      "type": "string",
+      "maxLength": 50,
+      "default": "text-amber-400"
+    },
+    "description": {
+      "type": "richtext"
+    },
+    "backgroundImage": {
+      "type": "media",
+      "multiple": false,
+      "allowedTypes": [
+        "images"
+      ]
+    },
+    "columns": {
+      "type": "component",
+      "repeatable": true,
+      "component": "content.campus-gallery-column",
+      "min": 4,
+      "max": 4,
+      "required": true
+    }
+  }
+}
+

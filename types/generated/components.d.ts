@@ -39,6 +39,45 @@ export interface ContentBulletItem extends Struct.ComponentSchema {
   };
 }
 
+export interface ContentCampusGalleryColumn extends Struct.ComponentSchema {
+  collectionName: 'components_content_campus_gallery_columns';
+  info: {
+    description: 'Column containing exactly two gallery images';
+    displayName: 'Campus Gallery Column';
+    icon: 'columns';
+  };
+  attributes: {
+    images: Schema.Attribute.Component<'content.campus-gallery-image', true> &
+      Schema.Attribute.Required &
+      Schema.Attribute.SetMinMax<
+        {
+          max: 2;
+          min: 2;
+        },
+        number
+      >;
+    order: Schema.Attribute.Integer & Schema.Attribute.DefaultTo<0>;
+  };
+}
+
+export interface ContentCampusGalleryImage extends Struct.ComponentSchema {
+  collectionName: 'components_content_campus_gallery_images';
+  info: {
+    description: 'Image tile used in the campus gallery collage';
+    displayName: 'Campus Gallery Image';
+    icon: 'images';
+  };
+  attributes: {
+    altText: Schema.Attribute.String &
+      Schema.Attribute.SetMinMaxLength<{
+        maxLength: 120;
+      }>;
+    image: Schema.Attribute.Media<'images'> & Schema.Attribute.Required;
+    layoutVariant: Schema.Attribute.Enumeration<['square', 'tall', 'wide']> &
+      Schema.Attribute.DefaultTo<'square'>;
+  };
+}
+
 export interface ContentPartnershipItem extends Struct.ComponentSchema {
   collectionName: 'components_content_partnership_items';
   info: {
@@ -162,6 +201,8 @@ declare module '@strapi/strapi' {
     export interface ComponentSchemas {
       'content.achievement-item': ContentAchievementItem;
       'content.bullet-item': ContentBulletItem;
+      'content.campus-gallery-column': ContentCampusGalleryColumn;
+      'content.campus-gallery-image': ContentCampusGalleryImage;
       'content.partnership-item': ContentPartnershipItem;
       'content.recognition-item': ContentRecognitionItem;
       'content.testimonial-item': ContentTestimonialItem;

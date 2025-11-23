@@ -560,6 +560,68 @@ export interface ApiAchievementAchievement extends Struct.CollectionTypeSchema {
   };
 }
 
+export interface ApiCampusGallerySectionCampusGallerySection
+  extends Struct.CollectionTypeSchema {
+  collectionName: 'campus_gallery_sections';
+  info: {
+    description: 'Institution-specific collage of campus life images';
+    displayName: 'Campus Gallery Section';
+    pluralName: 'campus-gallery-sections';
+    singularName: 'campus-gallery-section';
+  };
+  options: {
+    draftAndPublish: false;
+  };
+  attributes: {
+    backgroundImage: Schema.Attribute.Media<'images'>;
+    columns: Schema.Attribute.Component<'content.campus-gallery-column', true> &
+      Schema.Attribute.Required &
+      Schema.Attribute.SetMinMax<
+        {
+          max: 4;
+          min: 4;
+        },
+        number
+      >;
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    description: Schema.Attribute.RichText;
+    institution: Schema.Attribute.Relation<
+      'oneToOne',
+      'api::institution.institution'
+    >;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::campus-gallery-section.campus-gallery-section'
+    > &
+      Schema.Attribute.Private;
+    publishedAt: Schema.Attribute.DateTime;
+    titleHighlight: Schema.Attribute.String &
+      Schema.Attribute.SetMinMaxLength<{
+        maxLength: 100;
+      }>;
+    titleHighlightColor: Schema.Attribute.String &
+      Schema.Attribute.SetMinMaxLength<{
+        maxLength: 50;
+      }> &
+      Schema.Attribute.DefaultTo<'text-amber-400'>;
+    titlePrefix: Schema.Attribute.String &
+      Schema.Attribute.SetMinMaxLength<{
+        maxLength: 100;
+      }>;
+    titlePrefixColor: Schema.Attribute.String &
+      Schema.Attribute.SetMinMaxLength<{
+        maxLength: 50;
+      }> &
+      Schema.Attribute.DefaultTo<'text-white'>;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+  };
+}
+
 export interface ApiIconBadgeIconBadge extends Struct.CollectionTypeSchema {
   collectionName: 'icon_badges';
   info: {
@@ -648,6 +710,10 @@ export interface ApiInstitutionInstitution extends Struct.CollectionTypeSchema {
         maxLength: 50;
       }> &
       Schema.Attribute.DefaultTo<'white'>;
+    campusGallerySection: Schema.Attribute.Relation<
+      'oneToOne',
+      'api::campus-gallery-section.campus-gallery-section'
+    >;
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
@@ -1439,6 +1505,7 @@ declare module '@strapi/strapi' {
       'admin::user': AdminUser;
       'api::about-institute.about-institute': ApiAboutInstituteAboutInstitute;
       'api::achievement.achievement': ApiAchievementAchievement;
+      'api::campus-gallery-section.campus-gallery-section': ApiCampusGallerySectionCampusGallerySection;
       'api::icon-badge.icon-badge': ApiIconBadgeIconBadge;
       'api::institution.institution': ApiInstitutionInstitution;
       'api::key-highlight-section.key-highlight-section': ApiKeyHighlightSectionKeyHighlightSection;
