@@ -1,0 +1,39 @@
+{
+  "kind": "collectionType",
+  "collectionName": "contact_submissions",
+  "info": {
+    "singularName": "contact-submission",
+    "pluralName": "contact-submissions",
+    "displayName": "Contact  Submission"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "Category": {
+      "type": "text"
+    },
+    "FirstName": {
+      "type": "string"
+    },
+    "LastName": {
+      "type": "string"
+    },
+    "EmailAddress": {
+      "type": "email"
+    },
+    "PhoneNumber": {
+      "type": "text"
+    },
+    "Subject": {
+      "type": "text"
+    },
+    "Message": {
+      "type": "text"
+    },
+    "submittedAt": {
+      "type": "datetime"
+    }
+  }
+}
