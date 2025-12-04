@@ -622,6 +622,42 @@ export interface ApiCampusGallerySectionCampusGallerySection
   };
 }
 
+export interface ApiContactSubmissionContactSubmission
+  extends Struct.CollectionTypeSchema {
+  collectionName: 'contact_submissions';
+  info: {
+    displayName: 'Contact  Submission';
+    pluralName: 'contact-submissions';
+    singularName: 'contact-submission';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    Category: Schema.Attribute.Text;
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    EmailAddress: Schema.Attribute.Email;
+    FirstName: Schema.Attribute.String;
+    LastName: Schema.Attribute.String;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::contact-submission.contact-submission'
+    > &
+      Schema.Attribute.Private;
+    Message: Schema.Attribute.Text;
+    PhoneNumber: Schema.Attribute.Text;
+    publishedAt: Schema.Attribute.DateTime;
+    Subject: Schema.Attribute.Text;
+    submittedAt: Schema.Attribute.DateTime;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+  };
+}
+
 export interface ApiFaqSectionFaqSection extends Struct.CollectionTypeSchema {
   collectionName: 'faq_sections';
   info: {
@@ -1571,6 +1607,7 @@ declare module '@strapi/strapi' {
       'api::about-institute.about-institute': ApiAboutInstituteAboutInstitute;
       'api::achievement.achievement': ApiAchievementAchievement;
       'api::campus-gallery-section.campus-gallery-section': ApiCampusGallerySectionCampusGallerySection;
+      'api::contact-submission.contact-submission': ApiContactSubmissionContactSubmission;
       'api::faq-section.faq-section': ApiFaqSectionFaqSection;
       'api::icon-badge.icon-badge': ApiIconBadgeIconBadge;
       'api::institution.institution': ApiInstitutionInstitution;
