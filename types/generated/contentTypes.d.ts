@@ -765,6 +765,51 @@ export interface ApiIconBadgeIconBadge extends Struct.CollectionTypeSchema {
   };
 }
 
+export interface ApiIndustryCollaborationLeadIndustryCollaborationLead
+  extends Struct.CollectionTypeSchema {
+  collectionName: 'industry_collaboration_leads';
+  info: {
+    displayName: 'IndustryCollaborationLead';
+    pluralName: 'industry-collaboration-leads';
+    singularName: 'industry-collaboration-lead';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    additionalRequirements: Schema.Attribute.Text;
+    budgetRange: Schema.Attribute.String;
+    collaborationTypes: Schema.Attribute.JSON & Schema.Attribute.Required;
+    companyDescription: Schema.Attribute.Text;
+    companyName: Schema.Attribute.String & Schema.Attribute.Required;
+    companySize: Schema.Attribute.String & Schema.Attribute.Required;
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    email: Schema.Attribute.Email & Schema.Attribute.Required;
+    fullName: Schema.Attribute.String & Schema.Attribute.Required;
+    industry: Schema.Attribute.String & Schema.Attribute.Required;
+    jobTitle: Schema.Attribute.String & Schema.Attribute.Required;
+    linkedinProfile: Schema.Attribute.String;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::industry-collaboration-lead.industry-collaboration-lead'
+    > &
+      Schema.Attribute.Private;
+    phone: Schema.Attribute.String & Schema.Attribute.Required;
+    projectDescription: Schema.Attribute.Text & Schema.Attribute.Required;
+    publishedAt: Schema.Attribute.DateTime;
+    skills: Schema.Attribute.Text;
+    successMetrics: Schema.Attribute.Text;
+    timeline: Schema.Attribute.String;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    website: Schema.Attribute.String;
+  };
+}
+
 export interface ApiInstitutionInstitution extends Struct.CollectionTypeSchema {
   collectionName: 'institutions';
   info: {
@@ -1610,6 +1655,7 @@ declare module '@strapi/strapi' {
       'api::contact-submission.contact-submission': ApiContactSubmissionContactSubmission;
       'api::faq-section.faq-section': ApiFaqSectionFaqSection;
       'api::icon-badge.icon-badge': ApiIconBadgeIconBadge;
+      'api::industry-collaboration-lead.industry-collaboration-lead': ApiIndustryCollaborationLeadIndustryCollaborationLead;
       'api::institution.institution': ApiInstitutionInstitution;
       'api::key-highlight-section.key-highlight-section': ApiKeyHighlightSectionKeyHighlightSection;
       'api::partnership-section.partnership-section': ApiPartnershipSectionPartnershipSection;

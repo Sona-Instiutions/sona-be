@@ -1,0 +1,75 @@
+{
+  "kind": "collectionType",
+  "collectionName": "industry_collaboration_leads",
+  "info": {
+    "singularName": "industry-collaboration-lead",
+    "pluralName": "industry-collaboration-leads",
+    "displayName": "IndustryCollaborationLead"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "companyName": {
+      "type": "string",
+      "required": true
+    },
+    "industry": {
+      "type": "string",
+      "required": true
+    },
+    "companySize": {
+      "type": "string",
+      "required": true
+    },
+    "website": {
+      "type": "string"
+    },
+    "companyDescription": {
+      "type": "text"
+    },
+    "fullName": {
+      "type": "string",
+      "required": true
+    },
+    "jobTitle": {
+      "type": "string",
+      "required": true
+    },
+    "email": {
+      "type": "email",
+      "required": true
+    },
+    "phone": {
+      "type": "string",
+      "required": true
+    },
+    "linkedinProfile": {
+      "type": "string"
+    },
+    "collaborationTypes": {
+      "type": "json",
+      "required": true
+    },
+    "timeline": {
+      "type": "string"
+    },
+    "budgetRange": {
+      "type": "string"
+    },
+    "projectDescription": {
+      "type": "text",
+      "required": true
+    },
+    "skills": {
+      "type": "text"
+    },
+    "successMetrics": {
+      "type": "text"
+    },
+    "additionalRequirements": {
+      "type": "text"
+    }
+  }
+}
