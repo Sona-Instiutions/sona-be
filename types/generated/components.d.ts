@@ -78,6 +78,93 @@ export interface ContentCampusGalleryImage extends Struct.ComponentSchema {
   };
 }
 
+export interface ContentEventCategory extends Struct.ComponentSchema {
+  collectionName: 'components_content_event_categories';
+  info: {
+    description: 'Event category component';
+    icon: 'tag';
+    name: 'event-category';
+  };
+  attributes: {
+    color: Schema.Attribute.String &
+      Schema.Attribute.SetMinMaxLength<{
+        maxLength: 50;
+      }>;
+    description: Schema.Attribute.Text &
+      Schema.Attribute.SetMinMaxLength<{
+        maxLength: 500;
+      }>;
+    icon: Schema.Attribute.Relation<'oneToOne', 'api::icon-badge.icon-badge'>;
+    name: Schema.Attribute.String &
+      Schema.Attribute.Required &
+      Schema.Attribute.SetMinMaxLength<{
+        maxLength: 100;
+      }>;
+    order: Schema.Attribute.Integer & Schema.Attribute.DefaultTo<0>;
+    slug: Schema.Attribute.String &
+      Schema.Attribute.Required &
+      Schema.Attribute.SetMinMaxLength<{
+        maxLength: 120;
+      }>;
+  };
+}
+
+export interface ContentEventComment extends Struct.ComponentSchema {
+  collectionName: 'components_content_event_comments';
+  info: {
+    description: 'Event comment component with moderation';
+    icon: 'message-circle';
+    name: 'event-comment';
+  };
+  attributes: {
+    authorEmail: Schema.Attribute.Email & Schema.Attribute.Required;
+    authorName: Schema.Attribute.String &
+      Schema.Attribute.Required &
+      Schema.Attribute.SetMinMaxLength<{
+        maxLength: 100;
+      }>;
+    content: Schema.Attribute.Text &
+      Schema.Attribute.Required &
+      Schema.Attribute.SetMinMaxLength<{
+        maxLength: 2000;
+      }>;
+    ipAddress: Schema.Attribute.String &
+      Schema.Attribute.SetMinMaxLength<{
+        maxLength: 45;
+      }>;
+    status: Schema.Attribute.Enumeration<
+      ['pending', 'approved', 'rejected', 'spam']
+    > &
+      Schema.Attribute.Required &
+      Schema.Attribute.DefaultTo<'pending'>;
+    userAgent: Schema.Attribute.Text &
+      Schema.Attribute.SetMinMaxLength<{
+        maxLength: 500;
+      }>;
+  };
+}
+
+export interface ContentEventTag extends Struct.ComponentSchema {
+  collectionName: 'components_content_event_tags';
+  info: {
+    description: 'Event tag component';
+    icon: 'tag';
+    name: 'event-tag';
+  };
+  attributes: {
+    name: Schema.Attribute.String &
+      Schema.Attribute.Required &
+      Schema.Attribute.SetMinMaxLength<{
+        maxLength: 50;
+      }>;
+    slug: Schema.Attribute.String &
+      Schema.Attribute.Required &
+      Schema.Attribute.SetMinMaxLength<{
+        maxLength: 60;
+      }>;
+  };
+}
+
 export interface ContentFaqItem extends Struct.ComponentSchema {
   collectionName: 'components_content_faq_items';
   info: {
@@ -221,6 +308,9 @@ declare module '@strapi/strapi' {
       'content.bullet-item': ContentBulletItem;
       'content.campus-gallery-column': ContentCampusGalleryColumn;
       'content.campus-gallery-image': ContentCampusGalleryImage;
+      'content.event-category': ContentEventCategory;
+      'content.event-comment': ContentEventComment;
+      'content.event-tag': ContentEventTag;
       'content.faq-item': ContentFaqItem;
       'content.partnership-item': ContentPartnershipItem;
       'content.recognition-item': ContentRecognitionItem;

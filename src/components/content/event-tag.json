@@ -1,0 +1,22 @@
+{
+  "collectionName": "components_content_event_tags",
+  "info": {
+    "name": "event-tag",
+    "icon": "tag",
+    "description": "Event tag component"
+  },
+  "options": {},
+  "attributes": {
+    "name": {
+      "type": "string",
+      "required": true,
+      "maxLength": 50
+    },
+    "slug": {
+      "type": "string",
+      "required": true,
+      "maxLength": 60
+    }
+  }
+}
+
