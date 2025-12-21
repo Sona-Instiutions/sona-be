@@ -1,0 +1,39 @@
+{
+  "collectionName": "components_content_event_categories",
+  "info": {
+    "name": "event-category",
+    "icon": "tag",
+    "description": "Event category component"
+  },
+  "options": {},
+  "attributes": {
+    "name": {
+      "type": "string",
+      "required": true,
+      "maxLength": 100
+    },
+    "slug": {
+      "type": "string",
+      "required": true,
+      "maxLength": 120
+    },
+    "description": {
+      "type": "text",
+      "maxLength": 500
+    },
+    "color": {
+      "type": "string",
+      "maxLength": 50
+    },
+    "icon": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::icon-badge.icon-badge"
+    },
+    "order": {
+      "type": "integer",
+      "default": 0
+    }
+  }
+}
+

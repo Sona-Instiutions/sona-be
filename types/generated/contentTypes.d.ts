@@ -658,6 +658,72 @@ export interface ApiContactSubmissionContactSubmission
   };
 }
 
+export interface ApiEventEvent extends Struct.CollectionTypeSchema {
+  collectionName: 'events';
+  info: {
+    description: 'Event content type with nested categories, tags, and comments';
+    displayName: 'Event';
+    pluralName: 'events';
+    singularName: 'event';
+  };
+  options: {
+    draftAndPublish: false;
+    increments: true;
+    timestamps: true;
+  };
+  attributes: {
+    author: Schema.Attribute.String &
+      Schema.Attribute.SetMinMaxLength<{
+        maxLength: 100;
+      }>;
+    categories: Schema.Attribute.Component<'content.event-category', true>;
+    comments: Schema.Attribute.Component<'content.event-comment', true>;
+    content: Schema.Attribute.RichText & Schema.Attribute.Required;
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    eventDate: Schema.Attribute.Date & Schema.Attribute.Required;
+    eventType: Schema.Attribute.Enumeration<['student', 'industry', 'all']> &
+      Schema.Attribute.Required;
+    excerpt: Schema.Attribute.Text &
+      Schema.Attribute.SetMinMaxLength<{
+        maxLength: 300;
+      }>;
+    featured: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<false>;
+    featuredImage: Schema.Attribute.Media<'images'> & Schema.Attribute.Required;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<'oneToMany', 'api::event.event'> &
+      Schema.Attribute.Private;
+    metaDescription: Schema.Attribute.Text &
+      Schema.Attribute.SetMinMaxLength<{
+        maxLength: 160;
+      }>;
+    metaTitle: Schema.Attribute.String &
+      Schema.Attribute.SetMinMaxLength<{
+        maxLength: 70;
+      }>;
+    publishedAt: Schema.Attribute.DateTime;
+    publishedDate: Schema.Attribute.DateTime & Schema.Attribute.Required;
+    relatedEvents: Schema.Attribute.Relation<'manyToMany', 'api::event.event'>;
+    slug: Schema.Attribute.UID<'title'> &
+      Schema.Attribute.Required &
+      Schema.Attribute.SetMinMaxLength<{
+        maxLength: 250;
+      }>;
+    tags: Schema.Attribute.Component<'content.event-tag', true>;
+    thumbnailImage: Schema.Attribute.Media<'images'>;
+    title: Schema.Attribute.String &
+      Schema.Attribute.Required &
+      Schema.Attribute.SetMinMaxLength<{
+        maxLength: 200;
+      }>;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    viewCount: Schema.Attribute.Integer & Schema.Attribute.DefaultTo<0>;
+  };
+}
+
 export interface ApiFaqSectionFaqSection extends Struct.CollectionTypeSchema {
   collectionName: 'faq_sections';
   info: {
@@ -1653,6 +1719,7 @@ declare module '@strapi/strapi' {
       'api::achievement.achievement': ApiAchievementAchievement;
       'api::campus-gallery-section.campus-gallery-section': ApiCampusGallerySectionCampusGallerySection;
       'api::contact-submission.contact-submission': ApiContactSubmissionContactSubmission;
+      'api::event.event': ApiEventEvent;
       'api::faq-section.faq-section': ApiFaqSectionFaqSection;
       'api::icon-badge.icon-badge': ApiIconBadgeIconBadge;
       'api::industry-collaboration-lead.industry-collaboration-lead': ApiIndustryCollaborationLeadIndustryCollaborationLead;

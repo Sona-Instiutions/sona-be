@@ -10,3 +10,9 @@ export default factories.createCoreRouter('api::faq-section.faq-section');
 
 
 
+
+
+
+
+
+

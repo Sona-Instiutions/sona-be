@@ -188,6 +188,62 @@ async function ensureCampusGallerySectionPublicPermissions(strapi: Core.Strapi) 
   );
 }
 
+/**
+ * Ensures the public role has permissions for the Events module.
+ *
+ * @param strapi - Strapi instance used to interact with the permission tables.
+ */
+async function ensureEventsModulePublicPermissions(strapi: Core.Strapi) {
+  const publicRole = await strapi.db.query("plugin::users-permissions.role").findOne({
+    where: { type: "public" },
+    populate: { permissions: true },
+  });
+
+  if (!publicRole) {
+    strapi.log.warn("Public role not found. Skipping events module permission setup.");
+    return;
+  }
+
+  const configs = [
+    { type: "event", actions: ["find", "findOne", "incrementView"] },
+    { type: "event-category", actions: ["find", "findOne"] },
+    { type: "event-tag", actions: ["find", "findOne"] },
+    { type: "event-comment", actions: ["create", "find"] }, // Create is public, Find allows fetching approved comments
+  ];
+
+  await Promise.all(
+    configs.map(async (config) => {
+      await Promise.all(
+        config.actions.map(async (action) => {
+          const permissionAction = `api::${config.type}.${config.type}.${action}`;
+
+          const existingPermission = await strapi.db.query("plugin::users-permissions.permission").findOne({
+            where: {
+              action: permissionAction,
+              role: publicRole.id,
+            },
+          });
+
+          if (!existingPermission) {
+            await strapi.db.query("plugin::users-permissions.permission").create({
+              data: {
+                action: permissionAction,
+                role: publicRole.id,
+                enabled: true,
+              },
+            });
+          } else if (!existingPermission.enabled) {
+            await strapi.db.query("plugin::users-permissions.permission").update({
+              where: { id: existingPermission.id },
+              data: { enabled: true },
+            });
+          }
+        })
+      );
+    })
+  );
+}
+
 export default {
   /**
    * An asynchronous register function that runs before
@@ -204,5 +260,6 @@ export default {
     await ensureValuePropositionPublicPermissions(strapi);
     await ensureAchievementPublicPermissions(strapi);
     await ensureCampusGallerySectionPublicPermissions(strapi);
+    await ensureEventsModulePublicPermissions(strapi);
   },
 };

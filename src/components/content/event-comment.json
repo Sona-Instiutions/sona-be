@@ -1,0 +1,45 @@
+{
+  "collectionName": "components_content_event_comments",
+  "info": {
+    "name": "event-comment",
+    "icon": "message-circle",
+    "description": "Event comment component with moderation"
+  },
+  "options": {},
+  "attributes": {
+    "authorName": {
+      "type": "string",
+      "required": true,
+      "maxLength": 100
+    },
+    "authorEmail": {
+      "type": "email",
+      "required": true
+    },
+    "content": {
+      "type": "text",
+      "required": true,
+      "maxLength": 2000
+    },
+    "status": {
+      "type": "enumeration",
+      "enum": [
+        "pending",
+        "approved",
+        "rejected",
+        "spam"
+      ],
+      "default": "pending",
+      "required": true
+    },
+    "ipAddress": {
+      "type": "string",
+      "maxLength": 45
+    },
+    "userAgent": {
+      "type": "text",
+      "maxLength": 500
+    }
+  }
+}
+
