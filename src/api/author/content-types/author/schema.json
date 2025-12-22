@@ -24,6 +24,21 @@
         "videos",
         "audios"
       ]
+    },
+    "role": {
+      "type": "string"
+    },
+    "bio": {
+      "type": "blocks"
+    },
+    "linkedin": {
+      "type": "string"
+    },
+    "twitter": {
+      "type": "string"
+    },
+    "email": {
+      "type": "email"
     }
   }
 }
