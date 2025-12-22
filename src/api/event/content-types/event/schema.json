@@ -1,0 +1,110 @@
+{
+  "kind": "collectionType",
+  "collectionName": "events",
+  "info": {
+    "singularName": "event",
+    "pluralName": "events",
+    "displayName": "Event",
+    "description": "Event content type with nested categories, tags, and comments"
+  },
+  "options": {
+    "increments": true,
+    "timestamps": true,
+    "draftAndPublish": false
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "title": {
+      "type": "string",
+      "required": true,
+      "maxLength": 200
+    },
+    "slug": {
+      "type": "uid",
+      "targetField": "title",
+      "required": true,
+      "maxLength": 250
+    },
+    "eventType": {
+      "type": "enumeration",
+      "enum": [
+        "student",
+        "industry",
+        "all"
+      ],
+      "required": true
+    },
+    "eventDate": {
+      "type": "date",
+      "required": true
+    },
+    "excerpt": {
+      "type": "text",
+      "maxLength": 300
+    },
+    "content": {
+      "type": "richtext",
+      "required": true
+    },
+    "featuredImage": {
+      "type": "media",
+      "multiple": false,
+      "required": true,
+      "allowedTypes": [
+        "images"
+      ]
+    },
+    "thumbnailImage": {
+      "type": "media",
+      "multiple": false,
+      "allowedTypes": [
+        "images"
+      ]
+    },
+    "author": {
+      "type": "string",
+      "maxLength": 100
+    },
+    "publishedDate": {
+      "type": "datetime",
+      "required": true
+    },
+    "featured": {
+      "type": "boolean",
+      "default": false
+    },
+    "viewCount": {
+      "type": "integer",
+      "default": 0
+    },
+    "metaTitle": {
+      "type": "string",
+      "maxLength": 70
+    },
+    "metaDescription": {
+      "type": "text",
+      "maxLength": 160
+    },
+    "categories": {
+      "type": "component",
+      "repeatable": true,
+      "component": "content.event-category"
+    },
+    "tags": {
+      "type": "component",
+      "repeatable": true,
+      "component": "content.event-tag"
+    },
+    "comments": {
+      "type": "component",
+      "repeatable": true,
+      "component": "content.event-comment"
+    },
+    "relatedEvents": {
+      "type": "relation",
+      "relation": "manyToMany",
+      "target": "api::event.event"
+    }
+  }
+}
+
