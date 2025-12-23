@@ -1,5 +1,23 @@
 import type { Schema, Struct } from '@strapi/strapi';
 
+export interface CommentsComments extends Struct.ComponentSchema {
+  collectionName: 'components_comments_comments';
+  info: {
+    displayName: 'comments';
+  };
+  attributes: {
+    authorEmail: Schema.Attribute.Email & Schema.Attribute.Required;
+    authorName: Schema.Attribute.String & Schema.Attribute.Required;
+    content: Schema.Attribute.Text & Schema.Attribute.Required;
+    ipAddress: Schema.Attribute.String;
+    statuss: Schema.Attribute.Enumeration<
+      ['pending', 'approved', 'rejected', 'spam']
+    > &
+      Schema.Attribute.Required;
+    userAgent: Schema.Attribute.Text;
+  };
+}
+
 export interface ContentAchievementItem extends Struct.ComponentSchema {
   collectionName: 'components_content_achievement_items';
   info: {
@@ -304,6 +322,7 @@ export interface SectionsProgramSection extends Struct.ComponentSchema {
 declare module '@strapi/strapi' {
   export module Public {
     export interface ComponentSchemas {
+      'comments.comments': CommentsComments;
       'content.achievement-item': ContentAchievementItem;
       'content.bullet-item': ContentBulletItem;
       'content.campus-gallery-column': ContentCampusGalleryColumn;

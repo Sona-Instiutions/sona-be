@@ -1,0 +1,14 @@
+{
+  "kind": "collectionType",
+  "collectionName": "blog_comments",
+  "info": {
+    "singularName": "blog-comment",
+    "pluralName": "blog-comments",
+    "displayName": "Blog comment"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {}
+}
