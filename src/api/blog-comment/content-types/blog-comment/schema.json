@@ -10,27 +10,5 @@
     "draftAndPublish": true
   },
   "pluginOptions": {},
-  "attributes": {
-    "name": {
-      "type": "string",
-      "required": true
-    },
-    "email": {
-      "type": "email",
-      "required": true
-    },
-    "message": {
-      "type": "text"
-    },
-    "isAuthor": {
-      "type": "boolean",
-      "default": false
-    },
-    "blog": {
-      "type": "relation",
-      "relation": "manyToOne",
-      "target": "api::blog.blog",
-      "inversedBy": "blog_comments"
-    }
-  }
+  "attributes": {}
 }

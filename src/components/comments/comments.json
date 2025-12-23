@@ -1,0 +1,38 @@
+{
+  "collectionName": "components_comments_comments",
+  "info": {
+    "displayName": "comments"
+  },
+  "options": {},
+  "attributes": {
+    "authorName": {
+      "type": "string",
+      "required": true
+    },
+    "authorEmail": {
+      "type": "email",
+      "required": true
+    },
+    "content": {
+      "type": "text",
+      "required": true
+    },
+    "statuss": {
+      "type": "enumeration",
+      "required": true,
+      "enum": [
+        "pending",
+        "approved",
+        "rejected",
+        "spam"
+      ]
+    },
+    "ipAddress": {
+      "type": "string"
+    },
+    "userAgent": {
+      "type": "text"
+    }
+  },
+  "config": {}
+}
