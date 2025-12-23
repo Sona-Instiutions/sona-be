@@ -13,21 +13,21 @@
     },
     "role": {
       "type": "string",
-      "required": true
+      "required": false
     },
     "company": {
       "type": "string"
     },
     "quote": {
       "type": "text",
-      "required": true
+      "required": false
     },
     "rating": {
       "type": "integer",
-      "required": true,
+      "required": false,
+      "default": 5,
       "min": 1,
-      "max": 5,
-      "default": 5
+      "max": 5
     },
     "avatar": {
       "type": "media",

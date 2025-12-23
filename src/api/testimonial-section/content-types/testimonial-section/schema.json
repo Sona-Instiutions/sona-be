@@ -35,8 +35,8 @@
     },
     "testimonials": {
       "type": "component",
-      "repeatable": true,
-      "component": "content.testimonial-item"
+      "component": "content.testimonial-item",
+      "repeatable": true
     }
   }
 }

@@ -249,9 +249,8 @@ export interface ContentTestimonialItem extends Struct.ComponentSchema {
     avatar: Schema.Attribute.Media<'images'>;
     company: Schema.Attribute.String;
     name: Schema.Attribute.String & Schema.Attribute.Required;
-    quote: Schema.Attribute.Text & Schema.Attribute.Required;
+    quote: Schema.Attribute.Text;
     rating: Schema.Attribute.Integer &
-      Schema.Attribute.Required &
       Schema.Attribute.SetMinMax<
         {
           max: 5;
@@ -260,7 +259,7 @@ export interface ContentTestimonialItem extends Struct.ComponentSchema {
         number
       > &
       Schema.Attribute.DefaultTo<5>;
-    role: Schema.Attribute.String & Schema.Attribute.Required;
+    role: Schema.Attribute.String;
   };
 }
 
