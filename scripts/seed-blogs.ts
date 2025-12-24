@@ -11,6 +11,16 @@ function calculateReadTime(content: string): number {
   return Math.max(1, Math.ceil(words / 200));
 }
 
+// Generate a URL-friendly slug from a title
+function generateSlug(title: string): string {
+  return title
+    .toLowerCase()
+    .trim()
+    .replace(/[^\w\s-]/g, '') // Remove special characters
+    .replace(/[\s_-]+/g, '-') // Replace spaces and underscores with hyphens
+    .replace(/^-+|-+$/g, ''); // Remove leading/trailing hyphens
+}
+
 // Generate a random date within the past 6 months
 function getRandomPublishedDate(): string {
   const now = new Date();
@@ -40,7 +50,25 @@ async function seedBlogs() {
 
     console.log(`Found ${existingBlogs.length} existing blogs.`);
 
-    if (existingBlogs.length === 0) {
+    // If we have blogs but fewer than templates, delete and recreate
+    const shouldRecreate = existingBlogs.length > 0 && existingBlogs.length < BLOG_TEMPLATES.length;
+    
+    if (shouldRecreate) {
+      console.log(`\n🗑️  Deleting ${existingBlogs.length} existing blogs to recreate from templates...`);
+      for (const blog of existingBlogs) {
+        try {
+          await app.documents('api::blog.blog').delete({
+            documentId: blog.documentId,
+          });
+          console.log(`  ✓ Deleted: "${blog.title}"`);
+        } catch (deleteError: any) {
+          console.error(`  ✗ Failed to delete "${blog.title}":`, deleteError.message);
+        }
+      }
+      console.log('✅ All existing blogs deleted.\n');
+    }
+
+    if (existingBlogs.length === 0 || shouldRecreate) {
       // Create new blogs from templates
       console.log('\n📝 Creating new blogs from templates...');
       
@@ -51,6 +79,7 @@ async function seedBlogs() {
 
         const blogData: any = {
           title: template.title,
+          slug: generateSlug(template.title),
           excerpt: template.excerpt,
           content: template.content.trim(),
           publishedDate,
@@ -74,7 +103,6 @@ async function seedBlogs() {
             status: 'approved',
             likes: comment.likes || Math.floor(Math.random() * 30),
           })),
-          publishedAt: publishedDate,
         };
 
         // Add social links if available
@@ -128,6 +156,12 @@ async function seedBlogs() {
         const isDummyBlog =
           blog.title.toLowerCase().includes('dummy') ||
           blog.title.toLowerCase().includes('test');
+
+        // Update slug if missing or it's a dummy blog
+        if (!blog.slug || isDummyBlog) {
+          updateData.slug = generateSlug(blog.title);
+          console.log(`- Setting slug: ${updateData.slug}`);
+        }
 
         // Update excerpt if missing, short, or it's a dummy blog
         if (!blog.excerpt || blog.excerpt.length < 50 || isDummyBlog) {

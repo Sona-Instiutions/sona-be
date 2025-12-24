@@ -1,8 +1,10 @@
 {
   "collectionName": "components_content_case_study_categories",
   "info": {
+    "name": "case-study-category",
     "displayName": "Case Study Category",
-    "icon": "folder"
+    "icon": "folder",
+    "description": "Case Study category component"
   },
   "options": {},
   "attributes": {

@@ -1,8 +1,10 @@
 {
   "collectionName": "components_content_case_study_comments",
   "info": {
+    "name": "case-study-comment",
     "displayName": "Case Study Comment",
-    "icon": "discuss"
+    "icon": "discuss",
+    "description": "Case Study comment component"
   },
   "options": {},
   "attributes": {

@@ -10,6 +10,16 @@ function calculateReadTime(content: string): number {
   return Math.max(1, Math.ceil(words / 200));
 }
 
+// Generate a URL-friendly slug from a title
+function generateSlug(title: string): string {
+  return title
+    .toLowerCase()
+    .trim()
+    .replace(/[^\w\s-]/g, '') // Remove special characters
+    .replace(/[\s_-]+/g, '-') // Replace spaces and underscores with hyphens
+    .replace(/^-+|-+$/g, ''); // Remove leading/trailing hyphens
+}
+
 // Generate a random date within the past 12 months
 function getRandomDate(monthsBack = 12): string {
   const now = new Date();
@@ -39,7 +49,25 @@ async function seedCaseStudies() {
 
     console.log(`Found ${existingCaseStudies.length} existing case studies.`);
 
-    if (existingCaseStudies.length === 0) {
+    // If we have case studies but fewer than templates, delete and recreate
+    const shouldRecreate = existingCaseStudies.length > 0 && existingCaseStudies.length < CASE_STUDY_TEMPLATES.length;
+    
+    if (shouldRecreate) {
+      console.log(`\n🗑️  Deleting ${existingCaseStudies.length} existing case studies to recreate from templates...`);
+      for (const caseStudy of existingCaseStudies) {
+        try {
+          await app.documents('api::case-study.case-study').delete({
+            documentId: caseStudy.documentId,
+          });
+          console.log(`  ✓ Deleted: "${caseStudy.title}"`);
+        } catch (deleteError: any) {
+          console.error(`  ✗ Failed to delete "${caseStudy.title}":`, deleteError.message);
+        }
+      }
+      console.log('✅ All existing case studies deleted.\n');
+    }
+
+    if (existingCaseStudies.length === 0 || shouldRecreate) {
       // Create new case studies from templates
       console.log('\n📝 Creating new case studies from templates...');
       
@@ -50,6 +78,7 @@ async function seedCaseStudies() {
 
         const caseStudyData: any = {
           title: template.title,
+          slug: generateSlug(template.title),
           excerpt: template.excerpt,
           content: template.content.trim(),
           publishedDate, // Optional but good for dummy data
@@ -75,7 +104,6 @@ async function seedCaseStudies() {
             likes: comment.likes || Math.floor(Math.random() * 30),
             publishedAt: getRandomDate(1),
           })),
-          publishedAt: publishedDate,
         };
 
         // Add social links if available
@@ -127,6 +155,12 @@ async function seedCaseStudies() {
         const isDummy =
           caseStudy.title.toLowerCase().includes('dummy') ||
           caseStudy.title.toLowerCase().includes('test');
+
+        // Update slug if missing or it's a dummy
+        if (!caseStudy.slug || isDummy) {
+          updateData.slug = generateSlug(caseStudy.title);
+          console.log(`- Setting slug: ${updateData.slug}`);
+        }
 
         // Update fields if missing or it's a dummy
         if (!caseStudy.excerpt || caseStudy.excerpt.length < 50 || isDummy) {

@@ -167,6 +167,59 @@ export interface ContentCampusGalleryImage extends Struct.ComponentSchema {
   };
 }
 
+export interface ContentCaseStudyCategory extends Struct.ComponentSchema {
+  collectionName: 'components_content_case_study_categories';
+  info: {
+    description: 'Case Study category component';
+    displayName: 'Case Study Category';
+    icon: 'folder';
+    name: 'case-study-category';
+  };
+  attributes: {
+    color: Schema.Attribute.String;
+    description: Schema.Attribute.Text;
+    icon: Schema.Attribute.String;
+    name: Schema.Attribute.String & Schema.Attribute.Required;
+    order: Schema.Attribute.Integer & Schema.Attribute.DefaultTo<0>;
+    slug: Schema.Attribute.String & Schema.Attribute.Required;
+  };
+}
+
+export interface ContentCaseStudyComment extends Struct.ComponentSchema {
+  collectionName: 'components_content_case_study_comments';
+  info: {
+    description: 'Case Study comment component';
+    displayName: 'Case Study Comment';
+    icon: 'discuss';
+    name: 'case-study-comment';
+  };
+  attributes: {
+    authorEmail: Schema.Attribute.Email;
+    authorName: Schema.Attribute.String & Schema.Attribute.Required;
+    content: Schema.Attribute.Text & Schema.Attribute.Required;
+    ipAddress: Schema.Attribute.String;
+    likes: Schema.Attribute.Integer & Schema.Attribute.DefaultTo<0>;
+    publishedAt: Schema.Attribute.DateTime;
+    status: Schema.Attribute.Enumeration<['pending', 'approved', 'rejected']> &
+      Schema.Attribute.DefaultTo<'pending'>;
+    userAgent: Schema.Attribute.String;
+  };
+}
+
+export interface ContentCaseStudyTag extends Struct.ComponentSchema {
+  collectionName: 'components_content_case_study_tags';
+  info: {
+    description: 'Case Study tag component';
+    displayName: 'Case Study Tag';
+    icon: 'tag';
+    name: 'case-study-tag';
+  };
+  attributes: {
+    name: Schema.Attribute.String & Schema.Attribute.Required;
+    slug: Schema.Attribute.String & Schema.Attribute.Required;
+  };
+}
+
 export interface ContentEventCategory extends Struct.ComponentSchema {
   collectionName: 'components_content_event_categories';
   info: {
@@ -401,6 +454,9 @@ declare module '@strapi/strapi' {
       'content.bullet-item': ContentBulletItem;
       'content.campus-gallery-column': ContentCampusGalleryColumn;
       'content.campus-gallery-image': ContentCampusGalleryImage;
+      'content.case-study-category': ContentCaseStudyCategory;
+      'content.case-study-comment': ContentCaseStudyComment;
+      'content.case-study-tag': ContentCaseStudyTag;
       'content.event-category': ContentEventCategory;
       'content.event-comment': ContentEventComment;
       'content.event-tag': ContentEventTag;

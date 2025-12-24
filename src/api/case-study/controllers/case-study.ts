@@ -4,6 +4,7 @@
 
 import { factories } from '@strapi/strapi';
 
+// @ts-ignore - Content type will be available at runtime
 export default factories.createCoreController('api::case-study.case-study', ({ strapi }) => ({
   /**
    * Custom action to increment view count

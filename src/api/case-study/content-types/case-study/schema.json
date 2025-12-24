@@ -8,7 +8,7 @@
     "description": "Case Study content type with nested categories, tags, and comments"
   },
   "options": {
-    "draftAndPublish": true
+    "draftAndPublish": false
   },
   "pluginOptions": {},
   "attributes": {

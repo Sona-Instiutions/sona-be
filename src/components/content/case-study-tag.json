@@ -1,8 +1,10 @@
 {
   "collectionName": "components_content_case_study_tags",
   "info": {
+    "name": "case-study-tag",
     "displayName": "Case Study Tag",
-    "icon": "tag"
+    "icon": "tag",
+    "description": "Case Study tag component"
   },
   "options": {},
   "attributes": {
