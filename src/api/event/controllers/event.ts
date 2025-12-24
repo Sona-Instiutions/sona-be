@@ -105,6 +105,37 @@ export default factories.createCoreController("api::event.event", ({ strapi }) =
     return { data: newComment };
   },
 
+  /**
+   * Get search suggestions for events.
+   * Optimized for lightweight autocomplete.
+   */
+  async suggestions(ctx) {
+    const q = ctx.query.q;
+    const limit = parseInt(ctx.query.limit as string) || 8;
+
+    if (typeof q !== "string" || q.length < 3) {
+      return { data: [] };
+    }
+
+    const searchTerm = q as string;
+
+    const entities = await strapi.documents("api::event.event").findMany({
+      filters: {
+        $or: [{ title: { $containsi: searchTerm } }, { excerpt: { $containsi: searchTerm } }],
+      },
+      fields: ["title", "slug", "eventDate", "excerpt"],
+      populate: {
+        thumbnailImage: {
+          fields: ["url", "formats"],
+        },
+      },
+      limit: limit,
+      sort: { eventDate: "desc" },
+    });
+
+    return { data: entities };
+  },
+
   async find(ctx) {
     // Enhanced find can be added here if needed, or rely on default filtering
     // For now, using default implementation which supports filters/sort/pagination

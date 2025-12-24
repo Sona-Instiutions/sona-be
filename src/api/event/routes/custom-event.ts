@@ -25,5 +25,13 @@ export default {
         auth: false,
       },
     },
+    {
+      method: "GET",
+      path: "/events/suggestions",
+      handler: "event.suggestions",
+      config: {
+        auth: false,
+      },
+    },
   ],
 };
