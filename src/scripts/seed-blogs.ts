@@ -1,8 +1,7 @@
-import strapi from '@strapi/strapi';
+import { Core } from '@strapi/strapi';
 import {
   BLOG_TEMPLATES,
   DEFAULT_BLOG_TEMPLATE,
-  BlogTemplate,
 } from './data/blog-templates';
 
 // Calculate read time based on content (average 200 words per minute)
@@ -35,42 +34,38 @@ function getRandomPublishedDate(): string {
   return randomDate.toISOString().split('T')[0];
 }
 
-async function seedBlogs() {
-  console.log('🌱 Starting blog data seeding...');
+export async function seedBlogs(strapi: Core.Strapi) {
+  strapi.log.info('🌱 Starting blog data seeding...');
 
-  let app;
   try {
-    // Bootstrap Strapi
-    app = await strapi.createStrapi({ distDir: './dist' }).load();
-
     // Fetch all blogs using Document Service
-    const existingBlogs = await app.documents('api::blog.blog').findMany({
+    const existingBlogs = await strapi.documents('api::blog.blog').findMany({
       populate: ['categories', 'tags', 'comments'],
     });
 
-    console.log(`Found ${existingBlogs.length} existing blogs.`);
+    strapi.log.info(`Found ${existingBlogs.length} existing blogs.`);
 
     // If we have blogs but fewer than templates, delete and recreate
     const shouldRecreate = existingBlogs.length > 0 && existingBlogs.length < BLOG_TEMPLATES.length;
     
     if (shouldRecreate) {
-      console.log(`\n🗑️  Deleting ${existingBlogs.length} existing blogs to recreate from templates...`);
+      strapi.log.info(`\n🗑️  Deleting ${existingBlogs.length} existing blogs to recreate from templates...`);
       for (const blog of existingBlogs) {
         try {
-          await app.documents('api::blog.blog').delete({
+          await strapi.documents('api::blog.blog').delete({
             documentId: blog.documentId,
           });
-          console.log(`  ✓ Deleted: "${blog.title}"`);
+          strapi.log.info(`  ✓ Deleted: "${blog.title}"`);
         } catch (deleteError: any) {
-          console.error(`  ✗ Failed to delete "${blog.title}":`, deleteError.message);
+          strapi.log.error(`  ✗ Failed to delete "${blog.title}": ${deleteError.message}`);
         }
       }
-      console.log('✅ All existing blogs deleted.\n');
+      strapi.log.info('✅ All existing blogs deleted.\n');
     }
 
     if (existingBlogs.length === 0 || shouldRecreate) {
       // Create new blogs from templates
-      console.log('\n📝 Creating new blogs from templates...');
+      strapi.log.info('\n📝 Creating new blogs from templates...');
       
       for (let i = 0; i < BLOG_TEMPLATES.length; i++) {
         const template = BLOG_TEMPLATES[i];
@@ -114,33 +109,31 @@ async function seedBlogs() {
         }
 
         try {
-          const created = await app.documents('api::blog.blog').create({
+          const created = await strapi.documents('api::blog.blog').create({
             data: blogData,
           });
-          console.log(
+          strapi.log.info(
             `✅ Created blog: "${template.title}" (DocumentID: ${created.documentId})`
           );
         } catch (createError: any) {
-          console.error(
-            `❌ Failed to create blog "${template.title}":`,
-            createError.message
+          strapi.log.error(
+            `❌ Failed to create blog "${template.title}": ${createError.message}`
           );
           if (createError.details) {
-            console.error(
-              'Error details:',
-              JSON.stringify(createError.details, null, 2)
+            strapi.log.error(
+              `Error details: ${JSON.stringify(createError.details, null, 2)}`
             );
           }
         }
       }
 
-      console.log('\n✨ Blog creation complete!');
+      strapi.log.info('\n✨ Blog creation complete!');
     } else {
       // Enrich existing blogs
-      console.log('\n🔄 Enriching existing blogs...');
+      strapi.log.info('\n🔄 Enriching existing blogs...');
 
       for (const blog of existingBlogs) {
-        console.log(
+        strapi.log.info(
           `\nProcessing blog: "${blog.title}" (DocumentID: ${blog.documentId})`
         );
 
@@ -160,32 +153,32 @@ async function seedBlogs() {
         // Update slug if missing or it's a dummy blog
         if (!blog.slug || isDummyBlog) {
           updateData.slug = generateSlug(blog.title);
-          console.log(`- Setting slug: ${updateData.slug}`);
+          strapi.log.info(`- Setting slug: ${updateData.slug}`);
         }
 
         // Update excerpt if missing, short, or it's a dummy blog
         if (!blog.excerpt || blog.excerpt.length < 50 || isDummyBlog) {
           updateData.excerpt = template.excerpt;
-          console.log(`- Updating excerpt`);
+          strapi.log.info(`- Updating excerpt`);
         }
 
         // Update content if missing, minimal, or it's a dummy blog
         if (!blog.content || blog.content.length < 200 || isDummyBlog) {
           updateData.content = template.content.trim();
-          console.log(`- Updating content`);
+          strapi.log.info(`- Updating content`);
         }
 
         // Update publishedDate if missing
         if (!blog.publishedDate || isDummyBlog) {
           updateData.publishedDate = getRandomPublishedDate();
-          console.log(`- Setting publishedDate`);
+          strapi.log.info(`- Setting publishedDate`);
         }
 
         // Update readTime if missing or needs recalculation
         if (!blog.readTime || isDummyBlog) {
           const content = blog.content || template.content;
           updateData.readTime = calculateReadTime(content);
-          console.log(`- Setting readTime: ${updateData.readTime} minutes`);
+          strapi.log.info(`- Setting readTime: ${updateData.readTime} minutes`);
         }
 
         // Update author information if missing
@@ -200,13 +193,13 @@ async function seedBlogs() {
           if (template.author.twitter) {
             updateData.authorTwitter = template.author.twitter;
           }
-          console.log(`- Setting author information`);
+          strapi.log.info(`- Setting author information`);
         }
 
         // Update featured flag (set some blogs as featured)
         if (blog.featured === undefined || isDummyBlog) {
           updateData.featured = template.featured;
-          console.log(`- Setting featured: ${template.featured}`);
+          strapi.log.info(`- Setting featured: ${template.featured}`);
         }
 
         // Update viewCount if low or missing
@@ -217,13 +210,13 @@ async function seedBlogs() {
           isDummyBlog
         ) {
           updateData.viewCount = Math.floor(Math.random() * 5000) + 100;
-          console.log(`- Setting viewCount: ${updateData.viewCount}`);
+          strapi.log.info(`- Setting viewCount: ${updateData.viewCount}`);
         }
 
         // Update categories if missing
         if (!blog.categories || blog.categories.length === 0) {
           updateData.categories = template.categories;
-          console.log(
+          strapi.log.info(
             `- Adding categories: ${template.categories.map((c) => c.name).join(', ')}`
           );
         }
@@ -231,7 +224,7 @@ async function seedBlogs() {
         // Update tags if missing
         if (!blog.tags || blog.tags.length === 0) {
           updateData.tags = template.tags;
-          console.log(
+          strapi.log.info(
             `- Adding tags: ${template.tags.map((t) => t.name).join(', ')}`
           );
         }
@@ -245,59 +238,49 @@ async function seedBlogs() {
             status: 'approved',
             likes: comment.likes || Math.floor(Math.random() * 30),
           }));
-          console.log(`- Adding ${updateData.comments.length} comments`);
+          strapi.log.info(`- Adding ${updateData.comments.length} comments`);
         }
 
         // Update metadata if missing
         if (!blog.metaTitle || isDummyBlog) {
           updateData.metaTitle =
             template.metaTitle || blog.title.substring(0, 70);
-          console.log(`- Setting metaTitle`);
+          strapi.log.info(`- Setting metaTitle`);
         }
         if (!blog.metaDescription || isDummyBlog) {
           updateData.metaDescription =
             template.metaDescription ||
             (blog.excerpt || template.excerpt).substring(0, 160);
-          console.log(`- Setting metaDescription`);
+          strapi.log.info(`- Setting metaDescription`);
         }
 
         // Perform update if there's anything to change
         if (Object.keys(updateData).length > 0) {
           try {
-            await app.documents('api::blog.blog').update({
+            await strapi.documents('api::blog.blog').update({
               documentId: blog.documentId,
               data: updateData,
             });
-            console.log(`✅ Successfully updated blog ${blog.documentId}`);
+            strapi.log.info(`✅ Successfully updated blog ${blog.documentId}`);
           } catch (updateError: any) {
-            console.error(
-              `❌ Failed to update blog ${blog.documentId}:`,
-              updateError.message
+            strapi.log.error(
+              `❌ Failed to update blog ${blog.documentId}: ${updateError.message}`
             );
             if (updateError.details) {
-              console.error(
-                'Error details:',
-                JSON.stringify(updateError.details, null, 2)
+              strapi.log.error(
+                `Error details: ${JSON.stringify(updateError.details, null, 2)}`
               );
             }
           }
         } else {
-          console.log(`⏭️ No updates needed for blog ${blog.documentId}`);
+          strapi.log.info(`⏭️ No updates needed for blog ${blog.documentId}`);
         }
       }
 
-      console.log('\n✨ Blog enrichment complete!');
+      strapi.log.info('\n✨ Blog enrichment complete!');
     }
   } catch (error) {
-    console.error('❌ Error during seeding:', error);
-    process.exit(1);
-  } finally {
-    if (app) {
-      await app.destroy();
-    }
-    process.exit(0);
+    strapi.log.error(`❌ Error during seeding: ${error}`);
   }
 }
-
-seedBlogs();
 

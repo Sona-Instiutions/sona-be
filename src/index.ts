@@ -1,4 +1,7 @@
 import type { Core } from "@strapi/strapi";
+import { seedEvents } from "./scripts/seed-events";
+import { seedBlogs } from "./scripts/seed-blogs";
+import { seedCaseStudies } from "./scripts/seed-case-studies";
 
 /**
  * Ensures the public role has read permissions for the about-institute collection.
@@ -261,5 +264,19 @@ export default {
     await ensureAchievementPublicPermissions(strapi);
     await ensureCampusGallerySectionPublicPermissions(strapi);
     await ensureEventsModulePublicPermissions(strapi);
+
+    // Check for seed data environment variable
+    if (process.env.STRAPI_SEED_DATA === "true") {
+      strapi.log.info("🚀 STRAPI_SEED_DATA is true, starting data seeding...");
+      
+      try {
+        await seedEvents(strapi);
+        await seedBlogs(strapi);
+        await seedCaseStudies(strapi);
+        strapi.log.info("✅ All data seeding completed successfully!");
+      } catch (error) {
+        strapi.log.error("❌ Data seeding failed:", error);
+      }
+    }
   },
 };

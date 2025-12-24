@@ -11,9 +11,9 @@
     "develop": "strapi develop",
     "start": "strapi start",
     "strapi": "strapi",
-    "seed:events": "ts-node scripts/seed-events.ts",
-    "seed:blogs": "ts-node scripts/seed-blogs.ts",
-    "seed:case-studies": "ts-node scripts/seed-case-studies.ts",
+    "seed:events": "ts-node src/scripts/seed-events.ts",
+    "seed:blogs": "ts-node src/scripts/seed-blogs.ts",
+    "seed:case-studies": "ts-node src/scripts/seed-case-studies.ts",
     "upgrade": "npx @strapi/upgrade latest",
     "upgrade:dry": "npx @strapi/upgrade latest --dry"
   },
