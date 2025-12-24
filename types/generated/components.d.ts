@@ -150,6 +150,8 @@ export interface ContentEventComment extends Struct.ComponentSchema {
       Schema.Attribute.SetMinMaxLength<{
         maxLength: 45;
       }>;
+    likes: Schema.Attribute.Integer & Schema.Attribute.DefaultTo<0>;
+    parentComment: Schema.Attribute.String;
     status: Schema.Attribute.Enumeration<
       ['pending', 'approved', 'rejected', 'spam']
     > &

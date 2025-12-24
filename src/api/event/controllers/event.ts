@@ -43,9 +43,29 @@ export default factories.createCoreController("api::event.event", ({ strapi }) =
     }
 
     // Return only approved comments
-    const comments = (event.comments || []).filter((c: any) => c.status === "approved");
+    const approvedComments = (event.comments || []).filter((c: any) => c.status === "approved");
 
-    return { data: comments };
+    // Nest comments
+    const commentMap = new Map();
+    const rootComments = [];
+
+    // First pass: Add all comments to map
+    approvedComments.forEach((comment: any) => {
+      comment.replies = [];
+      commentMap.set(comment.documentId || comment.id.toString(), comment);
+    });
+
+    // Second pass: Link children to parents
+    approvedComments.forEach((comment: any) => {
+      if (comment.parentComment && commentMap.has(comment.parentComment)) {
+        const parent = commentMap.get(comment.parentComment);
+        parent.replies.push(comment);
+      } else {
+        rootComments.push(comment);
+      }
+    });
+
+    return { data: rootComments };
   },
 
   /**

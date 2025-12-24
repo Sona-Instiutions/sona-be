@@ -39,6 +39,13 @@
     "userAgent": {
       "type": "text",
       "maxLength": 500
+    },
+    "likes": {
+      "type": "integer",
+      "default": 0
+    },
+    "parentComment": {
+      "type": "string"
     }
   }
 }

@@ -836,6 +836,15 @@ export interface ApiEventEvent extends Struct.CollectionTypeSchema {
       Schema.Attribute.SetMinMaxLength<{
         maxLength: 100;
       }>;
+    authorBio: Schema.Attribute.Text;
+    authorEmail: Schema.Attribute.Email;
+    authorImage: Schema.Attribute.Media<'images'>;
+    authorLinkedin: Schema.Attribute.String;
+    authorRole: Schema.Attribute.String &
+      Schema.Attribute.SetMinMaxLength<{
+        maxLength: 100;
+      }>;
+    authorTwitter: Schema.Attribute.String;
     categories: Schema.Attribute.Component<'content.event-category', true>;
     comments: Schema.Attribute.Component<'content.event-comment', true>;
     content: Schema.Attribute.RichText & Schema.Attribute.Required;
@@ -843,6 +852,9 @@ export interface ApiEventEvent extends Struct.CollectionTypeSchema {
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
     eventDate: Schema.Attribute.Date & Schema.Attribute.Required;
+    eventHighlights: Schema.Attribute.JSON;
+    eventLocation: Schema.Attribute.String;
+    eventTime: Schema.Attribute.String;
     eventType: Schema.Attribute.Enumeration<['student', 'industry', 'all']> &
       Schema.Attribute.Required;
     excerpt: Schema.Attribute.Text &
@@ -864,6 +876,10 @@ export interface ApiEventEvent extends Struct.CollectionTypeSchema {
       }>;
     publishedAt: Schema.Attribute.DateTime;
     publishedDate: Schema.Attribute.DateTime & Schema.Attribute.Required;
+    registrationStatus: Schema.Attribute.Enumeration<
+      ['Open', 'Closed', 'Upcoming']
+    > &
+      Schema.Attribute.DefaultTo<'Open'>;
     relatedEvents: Schema.Attribute.Relation<'manyToMany', 'api::event.event'>;
     slug: Schema.Attribute.UID<'title'> &
       Schema.Attribute.Required &

@@ -65,6 +65,47 @@
       "type": "string",
       "maxLength": 100
     },
+    "authorRole": {
+      "type": "string",
+      "maxLength": 100
+    },
+    "authorBio": {
+      "type": "text"
+    },
+    "authorImage": {
+      "type": "media",
+      "multiple": false,
+      "allowedTypes": [
+        "images"
+      ]
+    },
+    "authorLinkedin": {
+      "type": "string"
+    },
+    "authorTwitter": {
+      "type": "string"
+    },
+    "authorEmail": {
+      "type": "email"
+    },
+    "eventLocation": {
+      "type": "string"
+    },
+    "eventTime": {
+      "type": "string"
+    },
+    "registrationStatus": {
+      "type": "enumeration",
+      "enum": [
+        "Open",
+        "Closed",
+        "Upcoming"
+      ],
+      "default": "Open"
+    },
+    "eventHighlights": {
+      "type": "json"
+    },
     "publishedDate": {
       "type": "datetime",
       "required": true
