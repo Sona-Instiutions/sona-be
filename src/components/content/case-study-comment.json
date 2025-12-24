@@ -1,0 +1,44 @@
+{
+  "collectionName": "components_content_case_study_comments",
+  "info": {
+    "displayName": "Case Study Comment",
+    "icon": "discuss"
+  },
+  "options": {},
+  "attributes": {
+    "content": {
+      "type": "text",
+      "required": true
+    },
+    "authorName": {
+      "type": "string",
+      "required": true
+    },
+    "authorEmail": {
+      "type": "email"
+    },
+    "publishedAt": {
+      "type": "datetime"
+    },
+    "ipAddress": {
+      "type": "string"
+    },
+    "userAgent": {
+      "type": "string"
+    },
+    "status": {
+      "type": "enumeration",
+      "enum": [
+        "pending",
+        "approved",
+        "rejected"
+      ],
+      "default": "pending"
+    },
+    "likes": {
+      "type": "integer",
+      "default": 0
+    }
+  }
+}
+

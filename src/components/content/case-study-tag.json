@@ -1,0 +1,19 @@
+{
+  "collectionName": "components_content_case_study_tags",
+  "info": {
+    "displayName": "Case Study Tag",
+    "icon": "tag"
+  },
+  "options": {},
+  "attributes": {
+    "name": {
+      "type": "string",
+      "required": true
+    },
+    "slug": {
+      "type": "string",
+      "required": true
+    }
+  }
+}
+

@@ -1,0 +1,132 @@
+{
+  "kind": "collectionType",
+  "collectionName": "case_studies",
+  "info": {
+    "singularName": "case-study",
+    "pluralName": "case-studies",
+    "displayName": "Case Study",
+    "description": "Case Study content type with nested categories, tags, and comments"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "title": {
+      "type": "string",
+      "required": true,
+      "maxLength": 200
+    },
+    "slug": {
+      "type": "uid",
+      "targetField": "title",
+      "required": true,
+      "maxLength": 250
+    },
+    "excerpt": {
+      "type": "text",
+      "required": true,
+      "maxLength": 300
+    },
+    "content": {
+      "type": "richtext",
+      "required": true
+    },
+    "publishedDate": {
+      "type": "date",
+      "required": false
+    },
+    "projectDate": {
+      "type": "date",
+      "required": false
+    },
+    "readTime": {
+      "type": "integer"
+    },
+    "bannerImage": {
+      "type": "media",
+      "multiple": false,
+      "required": true,
+      "allowedTypes": [
+        "images",
+        "files",
+        "videos",
+        "audios"
+      ]
+    },
+    "thumbnail": {
+      "type": "media",
+      "multiple": false,
+      "allowedTypes": [
+        "images",
+        "files",
+        "videos",
+        "audios"
+      ]
+    },
+    "author": {
+      "type": "string",
+      "maxLength": 100
+    },
+    "authorRole": {
+      "type": "string",
+      "maxLength": 100
+    },
+    "authorBio": {
+      "type": "text"
+    },
+    "authorImage": {
+      "type": "media",
+      "multiple": false,
+      "allowedTypes": [
+        "images"
+      ]
+    },
+    "authorLinkedin": {
+      "type": "string"
+    },
+    "authorTwitter": {
+      "type": "string"
+    },
+    "authorEmail": {
+      "type": "email"
+    },
+    "featured": {
+      "type": "boolean",
+      "default": false
+    },
+    "viewCount": {
+      "type": "integer",
+      "default": 0
+    },
+    "metaTitle": {
+      "type": "string",
+      "maxLength": 70
+    },
+    "metaDescription": {
+      "type": "text",
+      "maxLength": 160
+    },
+    "categories": {
+      "type": "component",
+      "repeatable": true,
+      "component": "content.case-study-category"
+    },
+    "tags": {
+      "type": "component",
+      "repeatable": true,
+      "component": "content.case-study-tag"
+    },
+    "comments": {
+      "type": "component",
+      "repeatable": true,
+      "component": "content.case-study-comment"
+    },
+    "relatedCaseStudies": {
+      "type": "relation",
+      "relation": "manyToMany",
+      "target": "api::case-study.case-study"
+    }
+  }
+}
+
