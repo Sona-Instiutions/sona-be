@@ -1,23 +1,5 @@
 import type { Schema, Struct } from '@strapi/strapi';
 
-export interface CommentsComments extends Struct.ComponentSchema {
-  collectionName: 'components_comments_comments';
-  info: {
-    displayName: 'comments';
-  };
-  attributes: {
-    authorEmail: Schema.Attribute.Email & Schema.Attribute.Required;
-    authorName: Schema.Attribute.String & Schema.Attribute.Required;
-    content: Schema.Attribute.Text & Schema.Attribute.Required;
-    ipAddress: Schema.Attribute.String;
-    statuss: Schema.Attribute.Enumeration<
-      ['pending', 'approved', 'rejected', 'spam']
-    > &
-      Schema.Attribute.Required;
-    userAgent: Schema.Attribute.Text;
-  };
-}
-
 export interface ContentAchievementItem extends Struct.ComponentSchema {
   collectionName: 'components_content_achievement_items';
   info: {
@@ -39,6 +21,95 @@ export interface ContentAchievementItem extends Struct.ComponentSchema {
       Schema.Attribute.Required &
       Schema.Attribute.SetMinMaxLength<{
         maxLength: 120;
+      }>;
+  };
+}
+
+export interface ContentBlogCategory extends Struct.ComponentSchema {
+  collectionName: 'components_content_blog_categories';
+  info: {
+    description: 'Blog category component';
+    icon: 'tag';
+    name: 'blog-category';
+  };
+  attributes: {
+    color: Schema.Attribute.String &
+      Schema.Attribute.SetMinMaxLength<{
+        maxLength: 50;
+      }>;
+    description: Schema.Attribute.Text &
+      Schema.Attribute.SetMinMaxLength<{
+        maxLength: 500;
+      }>;
+    icon: Schema.Attribute.Relation<'oneToOne', 'api::icon-badge.icon-badge'>;
+    name: Schema.Attribute.String &
+      Schema.Attribute.Required &
+      Schema.Attribute.SetMinMaxLength<{
+        maxLength: 100;
+      }>;
+    order: Schema.Attribute.Integer & Schema.Attribute.DefaultTo<0>;
+    slug: Schema.Attribute.String &
+      Schema.Attribute.Required &
+      Schema.Attribute.SetMinMaxLength<{
+        maxLength: 120;
+      }>;
+  };
+}
+
+export interface ContentBlogComment extends Struct.ComponentSchema {
+  collectionName: 'components_content_blog_comments';
+  info: {
+    description: 'Blog comment component with moderation';
+    icon: 'message-circle';
+    name: 'blog-comment';
+  };
+  attributes: {
+    authorEmail: Schema.Attribute.Email & Schema.Attribute.Required;
+    authorName: Schema.Attribute.String &
+      Schema.Attribute.Required &
+      Schema.Attribute.SetMinMaxLength<{
+        maxLength: 100;
+      }>;
+    content: Schema.Attribute.Text &
+      Schema.Attribute.Required &
+      Schema.Attribute.SetMinMaxLength<{
+        maxLength: 2000;
+      }>;
+    ipAddress: Schema.Attribute.String &
+      Schema.Attribute.SetMinMaxLength<{
+        maxLength: 45;
+      }>;
+    likes: Schema.Attribute.Integer & Schema.Attribute.DefaultTo<0>;
+    parentComment: Schema.Attribute.String;
+    status: Schema.Attribute.Enumeration<
+      ['pending', 'approved', 'rejected', 'spam']
+    > &
+      Schema.Attribute.Required &
+      Schema.Attribute.DefaultTo<'pending'>;
+    userAgent: Schema.Attribute.Text &
+      Schema.Attribute.SetMinMaxLength<{
+        maxLength: 500;
+      }>;
+  };
+}
+
+export interface ContentBlogTag extends Struct.ComponentSchema {
+  collectionName: 'components_content_blog_tags';
+  info: {
+    description: 'Blog tag component';
+    icon: 'tag';
+    name: 'blog-tag';
+  };
+  attributes: {
+    name: Schema.Attribute.String &
+      Schema.Attribute.Required &
+      Schema.Attribute.SetMinMaxLength<{
+        maxLength: 50;
+      }>;
+    slug: Schema.Attribute.String &
+      Schema.Attribute.Required &
+      Schema.Attribute.SetMinMaxLength<{
+        maxLength: 60;
       }>;
   };
 }
@@ -323,8 +394,10 @@ export interface SectionsProgramSection extends Struct.ComponentSchema {
 declare module '@strapi/strapi' {
   export module Public {
     export interface ComponentSchemas {
-      'comments.comments': CommentsComments;
       'content.achievement-item': ContentAchievementItem;
+      'content.blog-category': ContentBlogCategory;
+      'content.blog-comment': ContentBlogComment;
+      'content.blog-tag': ContentBlogTag;
       'content.bullet-item': ContentBulletItem;
       'content.campus-gallery-column': ContentCampusGalleryColumn;
       'content.campus-gallery-image': ContentCampusGalleryImage;

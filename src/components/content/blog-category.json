@@ -1,0 +1,39 @@
+{
+  "collectionName": "components_content_blog_categories",
+  "info": {
+    "name": "blog-category",
+    "icon": "tag",
+    "description": "Blog category component"
+  },
+  "options": {},
+  "attributes": {
+    "name": {
+      "type": "string",
+      "required": true,
+      "maxLength": 100
+    },
+    "slug": {
+      "type": "string",
+      "required": true,
+      "maxLength": 120
+    },
+    "description": {
+      "type": "text",
+      "maxLength": 500
+    },
+    "color": {
+      "type": "string",
+      "maxLength": 50
+    },
+    "icon": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::icon-badge.icon-badge"
+    },
+    "order": {
+      "type": "integer",
+      "default": 0
+    }
+  }
+}
+

@@ -4,7 +4,8 @@
   "info": {
     "singularName": "blog",
     "pluralName": "blogs",
-    "displayName": "Blog"
+    "displayName": "Blog",
+    "description": "Blog content type with nested categories, tags, and comments"
   },
   "options": {
     "draftAndPublish": true
@@ -12,16 +13,20 @@
   "pluginOptions": {},
   "attributes": {
     "title": {
-      "type": "text",
-      "required": true
+      "type": "string",
+      "required": true,
+      "maxLength": 200
     },
     "slug": {
       "type": "uid",
-      "targetField": "title"
+      "targetField": "title",
+      "required": true,
+      "maxLength": 250
     },
     "excerpt": {
       "type": "text",
-      "required": true
+      "required": true,
+      "maxLength": 300
     },
     "content": {
       "type": "richtext",
@@ -55,27 +60,68 @@
         "audios"
       ]
     },
+    "author": {
+      "type": "string",
+      "maxLength": 100
+    },
+    "authorRole": {
+      "type": "string",
+      "maxLength": 100
+    },
+    "authorBio": {
+      "type": "text"
+    },
+    "authorImage": {
+      "type": "media",
+      "multiple": false,
+      "allowedTypes": [
+        "images"
+      ]
+    },
+    "authorLinkedin": {
+      "type": "string"
+    },
+    "authorTwitter": {
+      "type": "string"
+    },
+    "authorEmail": {
+      "type": "email"
+    },
+    "featured": {
+      "type": "boolean",
+      "default": false
+    },
+    "viewCount": {
+      "type": "integer",
+      "default": 0
+    },
+    "metaTitle": {
+      "type": "string",
+      "maxLength": 70
+    },
+    "metaDescription": {
+      "type": "text",
+      "maxLength": 160
+    },
     "categories": {
-      "type": "relation",
-      "relation": "manyToMany",
-      "target": "api::category.category",
-      "mappedBy": "blogs"
+      "type": "component",
+      "repeatable": true,
+      "component": "content.blog-category"
     },
     "tags": {
-      "type": "relation",
-      "relation": "manyToMany",
-      "target": "api::tag.tag",
-      "mappedBy": "blogs"
-    },
-    "author": {
-      "type": "relation",
-      "relation": "oneToOne",
-      "target": "api::author.author"
+      "type": "component",
+      "repeatable": true,
+      "component": "content.blog-tag"
     },
     "comments": {
       "type": "component",
-      "component": "comments.comments",
-      "repeatable": true
+      "repeatable": true,
+      "component": "content.blog-comment"
+    },
+    "relatedBlogs": {
+      "type": "relation",
+      "relation": "manyToMany",
+      "target": "api::blog.blog"
     }
   }
 }

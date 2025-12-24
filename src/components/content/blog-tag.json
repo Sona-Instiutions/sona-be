@@ -1,0 +1,22 @@
+{
+  "collectionName": "components_content_blog_tags",
+  "info": {
+    "name": "blog-tag",
+    "icon": "tag",
+    "description": "Blog tag component"
+  },
+  "options": {},
+  "attributes": {
+    "name": {
+      "type": "string",
+      "required": true,
+      "maxLength": 50
+    },
+    "slug": {
+      "type": "string",
+      "required": true,
+      "maxLength": 60
+    }
+  }
+}
+
