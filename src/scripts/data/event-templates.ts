@@ -8,12 +8,19 @@ export const EVENT_TEMPLATES = [
 
 Artificial Intelligence is transforming every industry. This comprehensive workshop provides a deep dive into practical AI applications, from neural networks to generative models.
 
+### Watch the Workshop Introduction
+https://www.youtube.com/watch?v=R9OHn5ZF4Uo
+
 ### What You'll Learn
 
 *   Foundations of Machine Learning and Deep Learning
 *   Hands-on experience with popular AI frameworks
 *   Building and deploying your first AI model
 *   Ethical considerations in AI development
+
+### Learning Environment
+![Workshop Setup](https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?auto=format&fit=crop&q=80&w=1200)
+![Collaborative Learning](https://images.unsplash.com/photo-1522202176988-66273c2fd55f?auto=format&fit=crop&q=80&w=1200)
 
 ### Agenda
 

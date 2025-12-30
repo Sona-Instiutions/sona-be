@@ -616,6 +616,7 @@ export interface ApiBlogBlog extends Struct.CollectionTypeSchema {
     publishedDate: Schema.Attribute.Date & Schema.Attribute.Required;
     readTime: Schema.Attribute.Integer;
     relatedBlogs: Schema.Attribute.Relation<'manyToMany', 'api::blog.blog'>;
+    showComments: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<false>;
     slug: Schema.Attribute.UID<'title'> &
       Schema.Attribute.Required &
       Schema.Attribute.SetMinMaxLength<{
@@ -760,6 +761,7 @@ export interface ApiCaseStudyCaseStudy extends Struct.CollectionTypeSchema {
       'manyToMany',
       'api::case-study.case-study'
     >;
+    showComments: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<false>;
     slug: Schema.Attribute.UID<'title'> &
       Schema.Attribute.Required &
       Schema.Attribute.SetMinMaxLength<{
@@ -878,6 +880,7 @@ export interface ApiEventEvent extends Struct.CollectionTypeSchema {
     > &
       Schema.Attribute.DefaultTo<'Open'>;
     relatedEvents: Schema.Attribute.Relation<'manyToMany', 'api::event.event'>;
+    showComments: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<false>;
     slug: Schema.Attribute.UID<'title'> &
       Schema.Attribute.Required &
       Schema.Attribute.SetMinMaxLength<{

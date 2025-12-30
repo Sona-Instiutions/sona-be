@@ -146,9 +146,7 @@ export async function seedBlogs(strapi: Core.Strapi) {
           ) || DEFAULT_BLOG_TEMPLATE;
 
         const updateData: any = {};
-        const isDummyBlog =
-          blog.title.toLowerCase().includes('dummy') ||
-          blog.title.toLowerCase().includes('test');
+        const isDummyBlog = true; // Force update to apply new templates
 
         // Update slug if missing or it's a dummy blog
         if (!blog.slug || isDummyBlog) {
@@ -283,4 +281,5 @@ export async function seedBlogs(strapi: Core.Strapi) {
     strapi.log.error(`❌ Error during seeding: ${error}`);
   }
 }
+
 

@@ -216,3 +216,4 @@ export async function seedCaseStudies(strapi: Core.Strapi) {
     strapi.log.error(`❌ Error during seeding: ${error}`);
   }
 }
+

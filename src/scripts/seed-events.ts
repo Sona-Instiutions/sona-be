@@ -21,7 +21,7 @@ export async function seedEvents(strapi: Core.Strapi) {
       ) || DEFAULT_TEMPLATE;
 
       const updateData: any = {};
-      const isDummyEvent = event.title.toLowerCase().includes('dummy');
+      const isDummyEvent = true; // Force update to apply new templates
 
       // Update excerpt if missing, short, or it's a dummy event
       if (!event.excerpt || event.excerpt.length < 50 || isDummyEvent) {
@@ -103,4 +103,5 @@ export async function seedEvents(strapi: Core.Strapi) {
     strapi.log.error(`❌ Error during seeding: ${error}`);
   }
 }
+
 

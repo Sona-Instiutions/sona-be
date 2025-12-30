@@ -12,3 +12,4 @@ export default factories.createCoreController('api::campus-gallery-section.campu
 
 
 
+

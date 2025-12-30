@@ -12,3 +12,4 @@ export default factories.createCoreController('api::faq-section.faq-section');
 
 
 
+

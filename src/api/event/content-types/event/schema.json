@@ -118,6 +118,10 @@
       "type": "integer",
       "default": 0
     },
+    "showComments": {
+      "type": "boolean",
+      "default": false
+    },
     "metaTitle": {
       "type": "string",
       "maxLength": 70
